@@ -7,12 +7,12 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
-      Handler: build/handlers/template/hello.handle
+      Handler: build/presentation/handlers/recipes/get/get.handle
       Runtime: nodejs18.x
       Timeout: 30
       Events:
         CreateBooks:
           Type: Api
           Properties:
-            Path: /
+            Path: /recipes
             Method: get
