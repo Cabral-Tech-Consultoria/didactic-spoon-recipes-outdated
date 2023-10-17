@@ -22,6 +22,7 @@ const makeSut = () => {
 }
 
 describe('Get Handler', () => {
+	//<editor-fold desc="Should return 204 if no results were found">
 	test('Should return 204 if no results were found', async () => {
 		const sut = makeSut()
 
@@ -35,7 +36,9 @@ describe('Get Handler', () => {
 		expect(JSON.parse(response.body)).toEqual(null)
 		expect(response.statusCode).toBe(204)
 	})
+	//</editor-fold>
 
+	//<editor-fold desc="Should return 200 and 5 records as provided">
 	test('Should return 200 and 5 records as provided', async () => {
 		const sut = makeSut()
 
@@ -50,7 +53,9 @@ describe('Get Handler', () => {
 		expect(JSON.parse(response.body).length).toBe(5)
 		expect(response.statusCode).toBe(200)
 	})
+	//</editor-fold>
 
+	//<editor-fold desc="Should return InternalServerError if throws">
 	test('Should return InternalServerError if throws', async () => {
 		const sut = makeSut()
 
@@ -65,4 +70,5 @@ describe('Get Handler', () => {
 		expect(JSON.parse(response.body)).toEqual(JSON.parse(internalServerError().body))
 		expect(response.statusCode).toBe(internalServerError().statusCode)
 	})
+	//</editor-fold>
 })
