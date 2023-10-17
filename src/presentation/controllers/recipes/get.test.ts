@@ -2,12 +2,14 @@ import {describe, expect, jest, test} from '@jest/globals'
 import { get } from './get'
 import {APIGatewayProxyResult} from 'aws-lambda'
 import {internalServerError} from '../../../infra/error/http/error'
+import {noContent, ok} from '../../../infra/http'
+import {IRecipe} from '../../../domain/protocols/interfaces/recipe.interface'
 
 const promiseResolver = (data: APIGatewayProxyResult) => {
 	return jest.fn(() => Promise.resolve(data))
 }
 
-const mockedData = [
+const mockedData: IRecipe[] = [
 	{'id': 715563,'title': 'Pierogi Casserole','image': 'https://spoonacular.com/recipeImages/715563-312x231.jpg','imageType': 'jpg'},
 	{'id': 1095836,'title': 'Romanian Pea and Chicken Stew','image': 'https://spoonacular.com/recipeImages/1095836-312x231.jpg','imageType': 'jpg'},
 	{'id': 644476,'title': 'German Goulash','image': 'https://spoonacular.com/recipeImages/644476-312x231.jpg','imageType': 'jpg'},
@@ -26,7 +28,7 @@ describe('Get Handler', () => {
 	test('Should return 204 if no results were found', async () => {
 		const sut = makeSut()
 
-		const mock = promiseResolver({ statusCode: 204, body: JSON.stringify(null) })
+		const mock = promiseResolver(noContent())
 
 		jest
 			.spyOn(sut, 'get')
@@ -42,7 +44,7 @@ describe('Get Handler', () => {
 	test('Should return 200 and 5 records as provided', async () => {
 		const sut = makeSut()
 
-		const mock = promiseResolver({ statusCode: 200, body: JSON.stringify(mockedData) })
+		const mock = promiseResolver(ok<IRecipe[]>(mockedData))
 
 		jest
 			.spyOn(sut, 'get')
