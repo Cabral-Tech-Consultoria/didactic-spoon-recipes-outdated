@@ -40,6 +40,7 @@ describe('Get By Id Controller', () => {
 	})
 	//</editor-fold>
 
+	//<editor-fold desc="Should return 400 if no result is return">
 	test('Should return 400 if no result is return', async () => {
 		const sut = makeSut()
 
@@ -54,6 +55,7 @@ describe('Get By Id Controller', () => {
 		expect(JSON.parse(response.body)).toEqual(JSON.parse(badRequestError().body))
 		expect(response.statusCode).toEqual(badRequestError().statusCode)
 	})
+	//</editor-fold>
 
 	//<editor-fold desc="Should return InternalServerError if throws">
 	test('Should return InternalServerError if throws', async () => {
