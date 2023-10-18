@@ -15,7 +15,7 @@ export class DietEnum {
 		description: 'No ingredients may contain meat or meat by-products, such as bones or gelatin.'
 	}
 	LactoVegetarian = {
-		id: 'lacto vegetarian',
+		id: 'lacto-vegetarian',
 		name: 'Lacto-Vegetarian',
 		description: 'All ingredients must be vegetarian and none of the ingredients can be or contain egg.'
 	}
