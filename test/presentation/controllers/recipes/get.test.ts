@@ -1,13 +1,9 @@
 import {describe, expect, jest, test} from '@jest/globals'
-import { get } from './get'
-import {APIGatewayProxyResult} from 'aws-lambda'
-import {internalServerError} from '../../../infra/error/http/error'
-import {noContent, ok} from '../../../infra/http'
-import {IRecipe} from '../../../domain/protocols/interfaces/recipe.interface'
-
-const promiseResolver = (data: APIGatewayProxyResult) => {
-	return jest.fn(() => Promise.resolve(data))
-}
+import { get } from '../../../../src/presentation/controllers/recipes/get'
+import {internalServerError} from '../../../../src/infra/error/http/error'
+import {noContent, ok} from '../../../../src/infra/http'
+import {IRecipe} from '../../../../src/domain/protocols/interfaces/recipe.interface'
+import {promiseResolver} from '../../../index'
 
 const mockedData: IRecipe[] = [
 	{'id': 715563,'title': 'Pierogi Casserole','image': 'https://spoonacular.com/recipeImages/715563-312x231.jpg','imageType': 'jpg'},
@@ -23,16 +19,16 @@ const makeSut = () => {
 	}
 }
 
-describe('Get Handler', () => {
+describe('Get Controller', () => {
 	//<editor-fold desc="Should return 204 if no results were found">
 	test('Should return 204 if no results were found', async () => {
 		const sut = makeSut()
 
-		const mock = promiseResolver(noContent())
+		const mock = promiseResolver(noContent())()
 
 		jest
 			.spyOn(sut, 'get')
-			.mockReturnValueOnce(mock())
+			.mockReturnValueOnce(mock)
 		const response = await sut.get({})
 
 		expect(JSON.parse(response.body)).toEqual(null)
@@ -44,11 +40,11 @@ describe('Get Handler', () => {
 	test('Should return 200 and 5 records as provided', async () => {
 		const sut = makeSut()
 
-		const mock = promiseResolver(ok<IRecipe[]>(mockedData))
+		const mock = promiseResolver(ok<IRecipe[]>(mockedData))()
 
 		jest
 			.spyOn(sut, 'get')
-			.mockReturnValueOnce(mock())
+			.mockReturnValueOnce(mock)
 
 		const response = await sut.get({ number: '5' })
 
@@ -61,11 +57,11 @@ describe('Get Handler', () => {
 	test('Should return InternalServerError if throws', async () => {
 		const sut = makeSut()
 
-		const mock = promiseResolver(internalServerError())
+		const mock = promiseResolver(internalServerError())()
 
 		jest
 			.spyOn(sut, 'get')
-			.mockReturnValueOnce(mock())
+			.mockReturnValueOnce(mock)
 
 		const response = await sut.get({})
 
