@@ -3,7 +3,7 @@ import {ConstructHttpInstance} from '../http.client'
 
 class RecipeService {
 	constructor() {
-		this.http = ConstructHttpInstance('recipes/complexSearch')
+		this.http = ConstructHttpInstance('recipes')
 	}
 
 	public http: AxiosInstance
