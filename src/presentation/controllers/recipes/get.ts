@@ -3,7 +3,7 @@ import {BaseQueryStringSearch} from '../../../infra/protocols/interfaces/queryst
 import {IRecipe} from '../../../domain/protocols/interfaces/recipe.interface'
 import { default as RecipeService } from '../../../infra/http'
 import {APIGatewayProxyResult} from 'aws-lambda'
-import {noContent, ok} from '../../../infra/http/http'
+import {noContent, ok} from '../../../infra/http'
 import {internalServerError} from '../../../infra/error/http/error'
 
 export const get = async (params: BaseQueryStringSearch): Promise<APIGatewayProxyResult> => {
@@ -14,7 +14,7 @@ export const get = async (params: BaseQueryStringSearch): Promise<APIGatewayProx
 
 		const { data } = await RecipeService
 			.http
-			.get<{ results: IRecipe[] }>('', { params })
+			.get<{ results: IRecipe[] }>('/complexSearch', { params })
 
 		logger.info({ message: 'Items returned from recipe api', body: data.results })
 
