@@ -130,5 +130,5 @@ dist
 .pnp.*
 
 # Build files
-build
-/.idea
+built
+/.idea/
