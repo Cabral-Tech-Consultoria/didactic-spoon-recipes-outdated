@@ -3,11 +3,11 @@ Transform: AWS::Serverless-2016-10-31
 Description: Sample SAM Template for lambda
 
 Resources:
-  Get:
+  GetRecipes:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
-      Handler: build/src/presentation/handlers/recipes/get/get.handle
+      Handler: built/src/presentation/handlers/recipes/get/get.handle
       Runtime: nodejs18.x
       Timeout: 30
       Events:
@@ -15,4 +15,18 @@ Resources:
           Type: Api
           Properties:
             Path: /recipes
+            Method: get
+
+  GetRecipesById:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: built/src/presentation/handlers/recipes/get-by-id/get-by-id.handle
+      Runtime: nodejs18.x
+      Timeout: 30
+      Events:
+        CreateBooks:
+          Type: Api
+          Properties:
+            Path: /recipes/{id}
             Method: get
