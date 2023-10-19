@@ -44,3 +44,17 @@ Resources:
           Properties:
             Path: /recipes/nutrients
             Method: get
+
+  GetRecipesByIngredients:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: built/src/presentation/handlers/recipes/get-by-ingredients.handle
+      Runtime: nodejs18.x
+      Timeout: 30
+      Events:
+        CreateBooks:
+          Type: Api
+          Properties:
+            Path: /recipes/ingredients
+            Method: get
