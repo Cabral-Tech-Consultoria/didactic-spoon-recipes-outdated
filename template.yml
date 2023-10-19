@@ -86,3 +86,31 @@ Resources:
           Properties:
             Path: /recipes/random
             Method: get
+
+  GetAutocompleteSearch:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: built/src/presentation/handlers/recipes/get-autocomplete-search.handle
+      Runtime: nodejs18.x
+      Timeout: 30
+      Events:
+        CreateBooks:
+          Type: Api
+          Properties:
+            Path: /recipes/search
+            Method: get
+
+  GetRecipeNutrition:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: built/src/presentation/handlers/recipes/get-recipe-nutrition.handle
+      Runtime: nodejs18.x
+      Timeout: 30
+      Events:
+        CreateBooks:
+          Type: Api
+          Properties:
+            Path: /recipes/{id}/nutrition
+            Method: get
