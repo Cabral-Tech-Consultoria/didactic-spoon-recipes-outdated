@@ -1,4 +1,4 @@
-export type ImageType = 'jpg' | 'png'
+export type ImageType = 'jpg' | 'png' | 'jpeg'
 
 export interface Ingredients {
   aisle: string,
