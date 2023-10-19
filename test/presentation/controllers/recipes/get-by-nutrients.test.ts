@@ -10,7 +10,7 @@ const makeSut = () => {
 	}
 }
 
-describe('Get By Nutrients', () => {
+describe('Get By Nutrients Controller', () => {
 	//<editor-fold desc="Should return 204 if no data was found">
 	test('Should return 204 if no data was found', async () => {
 		const sut = makeSut()

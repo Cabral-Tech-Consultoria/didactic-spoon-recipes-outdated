@@ -10,7 +10,7 @@ const makeSut = () => {
 	}
 }
 
-describe('Get by nutrients', () => {
+describe('Get By Ingredients Controller', () => {
 	//<editor-fold desc="Should return MissingParamError if no ingredient was provided">
 	test('Should return MissingParamError if no ingredient was provided', async () => {
 		const sut = makeSut()
