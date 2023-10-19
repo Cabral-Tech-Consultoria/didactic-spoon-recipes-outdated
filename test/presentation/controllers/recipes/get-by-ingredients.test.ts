@@ -1,21 +1,15 @@
+import 'reflect-metadata'
 import {describe, expect, jest, test} from '@jest/globals'
-import {promiseResolver} from '../../../index'
+import {buildAxiosResponse, makeSut, promiseResolver} from '../../../index'
 import {internalServerError, missingParamError} from '../../../../src/infra/error/http/error'
-import {getByIngredients} from '../../../../src/presentation/controllers/recipes/get-by-ingredients'
 import {noContent} from '../../../../src/infra/http'
-
-const makeSut = () => {
-	return {
-		getByIngredients
-	}
-}
 
 describe('Get By Ingredients Controller', () => {
 	//<editor-fold desc="Should return MissingParamError if no ingredient was provided">
 	test('Should return MissingParamError if no ingredient was provided', async () => {
-		const sut = makeSut()
+		const { controller } = makeSut()
 
-		const response = await sut.getByIngredients({ ingredients: '' })
+		const response = await controller.getByIngredients({ ingredients: '' })
 
 		expect(JSON.parse(response.body)).toEqual(JSON.parse(missingParamError('ingredients').body))
 	})
@@ -23,15 +17,15 @@ describe('Get By Ingredients Controller', () => {
 
 	//<editor-fold desc="Should return InternalServerError if throws">
 	test('Should return InternalServerError if throws', async () => {
-		const sut = makeSut()
+		const { controller } = makeSut()
 
 		const mock = promiseResolver(internalServerError())()
 
 		jest
-			.spyOn(sut, 'getByIngredients')
+			.spyOn(controller, 'getByIngredients')
 			.mockReturnValueOnce(mock)
 
-		const response = await sut.getByIngredients({ ingredients: 'apple' })
+		const response = await controller.getByIngredients({ ingredients: 'apple' })
 
 		expect(JSON.parse(response.body)).toEqual(JSON.parse(internalServerError().body))
 		expect(response.statusCode).toEqual(internalServerError().statusCode)
@@ -40,15 +34,15 @@ describe('Get By Ingredients Controller', () => {
 
 	//<editor-fold desc="Should return 204 if no data was found">
 	test('Should return 204 if no data was found', async () => {
-		const sut = makeSut()
+		const { controller, service } = makeSut()
 
-		const mock = promiseResolver(noContent())()
+		const mock = promiseResolver(buildAxiosResponse([]))()
 
 		jest
-			.spyOn(sut, 'getByIngredients')
+			.spyOn(service, 'getByIngredients')
 			.mockReturnValueOnce(mock)
 
-		const response = await sut.getByIngredients({ ingredients: 'ginger' })
+		const response = await controller.getByIngredients({ ingredients: 'ginger' })
 
 		expect(JSON.parse(response.body)).toEqual(JSON.parse(noContent().body))
 		expect(response.statusCode).toEqual(noContent().statusCode)
