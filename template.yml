@@ -7,7 +7,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
-      Handler: built/src/presentation/handlers/recipes/get/get.handle
+      Handler: built/src/presentation/handlers/recipes/get.handle
       Runtime: nodejs18.x
       Timeout: 30
       Events:
@@ -21,7 +21,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
-      Handler: built/src/presentation/handlers/recipes/get-by-id/get-by-id.handle
+      Handler: built/src/presentation/handlers/recipes/get-by-id.handle
       Runtime: nodejs18.x
       Timeout: 30
       Events:
@@ -35,7 +35,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
-      Handler: built/src/presentation/handlers/recipes/get-by-nutrients/get-by-nutrients.handle
+      Handler: built/src/presentation/handlers/recipes/get-by-nutrients.handle
       Runtime: nodejs18.x
       Timeout: 30
       Events:
