@@ -12,7 +12,7 @@ export const getByIngredients = async (params: QueryIngredients): Promise<APIGat
 
 		const { data } = await RecipeService
 			.http
-			.get<IRecipeIngredientsInfo[]>('findByIngredients', {
+			.get<IRecipeIngredientsInfo[]>('/findByIngredients', {
 				params
 			})
 
