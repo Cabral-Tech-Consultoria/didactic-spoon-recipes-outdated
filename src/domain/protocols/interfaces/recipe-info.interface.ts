@@ -74,8 +74,12 @@ export interface IRecipeInfo {
   extendedIngredients: Ingredients[],
   summary: string,
   winePairing: {
-  pairedWines: string[],
+    pairedWines: string[],
     pairingText: string,
     productMatches: ProductMatch[]
+  }
 }
+
+export interface IRandomRecipes {
+  recipes: IRecipeInfo[]
 }
