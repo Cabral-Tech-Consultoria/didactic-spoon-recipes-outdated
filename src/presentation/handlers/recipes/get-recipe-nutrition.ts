@@ -1,6 +1,14 @@
+import 'reflect-metadata'
 import {APIGatewayProxyEvent, APIGatewayProxyResult, Handler} from 'aws-lambda'
-import {getRecipeNutrition} from '../../controllers/recipes/get-recipe-nutrition'
+import {DIContainerConfig} from '../../../infra/dependency-injection/types.di'
+import {RecipeController} from '../../controllers/recipes/recipe.controller'
+import {RecipeService} from '../../../infra/http'
 
 export const handle: Handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-	return getRecipeNutrition(Number(event?.pathParameters?.id))
+	DIContainerConfig.bindClass(RecipeController)
+	DIContainerConfig.bindClass(RecipeService)
+
+	const controller = DIContainerConfig.container.resolve(RecipeController)
+
+	return controller.getRecipeNutrition(Number(event?.pathParameters?.id))
 }

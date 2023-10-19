@@ -1,8 +1,16 @@
+import 'reflect-metadata'
 import {APIGatewayProxyEvent, APIGatewayProxyResult, Handler} from 'aws-lambda'
 import {ConvertTo} from '../../../utils/convertion/converter'
-import {getRandom} from '../../controllers/recipes/get-random'
 import {QueryRandom} from '../../../infra/protocols/interfaces/query-random.intreface'
+import {DIContainerConfig} from '../../../infra/dependency-injection/types.di'
+import {RecipeController} from '../../controllers/recipes/recipe.controller'
+import {RecipeService} from '../../../infra/http'
 
 export const handle: Handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-	return getRandom(ConvertTo<QueryRandom>(event.queryStringParameters))
+	DIContainerConfig.bindClass(RecipeController)
+	DIContainerConfig.bindClass(RecipeService)
+
+	const controller = DIContainerConfig.container.resolve(RecipeController)
+
+	return controller.getRandom(ConvertTo<QueryRandom>(event.queryStringParameters))
 }
