@@ -128,3 +128,17 @@ Resources:
           Properties:
             Path: /ingredients
             Method: get
+
+  GetIngredientsById:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: built/src/presentation/handlers/ingredients/get-ingredient-by-id.handle
+      Runtime: nodejs18.x
+      Timeout: 30
+      Events:
+        CreateBooks:
+          Type: Api
+          Properties:
+            Path: /ingredients/{id}
+            Method: get
