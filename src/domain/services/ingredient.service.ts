@@ -6,6 +6,10 @@ import {IIngredientSearchList} from '../protocols/interfaces/ingredient-search.i
 import {injectable} from 'inversify'
 import {QueryIngredientById} from '../../infra/protocols/interfaces/query-ingredient-by-id.interface'
 import {IIngredientInfo} from '../protocols/interfaces/ingredient.interface'
+import {
+	QueryComputeIngredientNutrientAmount
+} from '../../infra/protocols/interfaces/query-compute-ingredient-nutrient-amount.interface'
+import {NutrientAmount} from '../protocols/interfaces/nutrient-amount.interface'
 
 @injectable()
 export class IngredientService implements IIngredientService {
@@ -18,7 +22,11 @@ export class IngredientService implements IIngredientService {
 		return this.http.get<IIngredientSearchList>('/search', { params })
 	}
 
-	async getIngredientById(id?: number, params?: QueryIngredientById):Promise<AxiosResponse<IIngredientInfo>> {
+	async getIngredientById(id?: number, params?: QueryIngredientById): Promise<AxiosResponse<IIngredientInfo>> {
 		return this.http.get<IIngredientInfo>(`/${id}/information`, { params })
+	}
+
+	async computeIngredientNutrientAmount(id?: number, params?: QueryComputeIngredientNutrientAmount): Promise<AxiosResponse<NutrientAmount>> {
+		return this.http.get<NutrientAmount>(`/${id}/amount`, { params })
 	}
 }
