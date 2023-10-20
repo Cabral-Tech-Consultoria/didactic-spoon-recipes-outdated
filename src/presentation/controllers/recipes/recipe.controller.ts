@@ -15,12 +15,13 @@ import {QueryRandom} from '../../../infra/protocols/interfaces/query-random.intr
 import {INutrition} from '../../../domain/protocols/interfaces/nutrition.interface'
 import {QuerySimilar} from '../../../infra/protocols/interfaces/query-similar.interface'
 import {IRecipeController} from './protocols/i-recipe.controller'
-import {injectable} from 'inversify'
+import {inject, injectable} from 'inversify'
 import {IRecipeService} from '../../../domain/services/protocols/i-recipe.service'
+import {TYPES_DI} from '../../../infra/dependency-injection/types.di'
 
 @injectable()
 export class RecipeController implements IRecipeController {
-	constructor(private service: IRecipeService) {}
+	constructor(@inject(TYPES_DI.RecipeService) private service: IRecipeService) {}
 
 	async get(params: BaseQueryStringSearch): Promise<APIGatewayProxyResult>  {
 		try {
