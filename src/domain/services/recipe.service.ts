@@ -1,5 +1,5 @@
 import {AxiosInstance, AxiosResponse} from 'axios'
-import {ConstructHttpInstance} from '../../infra/http/http.client'
+import {ConstructHttpInstance} from '../../infra/http'
 import {injectable} from 'inversify'
 import {IRecipeService} from './protocols/i-recipe.service'
 import {BaseQueryStringSearch} from '../../infra/protocols/interfaces/querystring.interface'
