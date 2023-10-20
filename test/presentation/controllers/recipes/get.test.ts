@@ -4,10 +4,10 @@ import {internalServerError} from '../../../../src/infra/error/http/error'
 import {
 	buildAxiosResponse,
 	makeSut,
-	mockedGetData,
-	promiseResolver
-} from '../../../index'
+	mockedGetData
+} from '../../../test-domains/recipes'
 import {AxiosResponse} from 'axios'
+import {promiseResolver} from '../../../index'
 
 describe('Get Controller', () => {
 	//<editor-fold desc="Should return 204 if no results were found">

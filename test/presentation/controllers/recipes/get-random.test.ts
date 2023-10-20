@@ -1,9 +1,10 @@
 import 'reflect-metadata'
 import {describe, expect, jest, test} from '@jest/globals'
-import {buildAxiosResponse, makeSut, promiseResolver} from '../../../index'
+import {buildAxiosResponse, makeSut} from '../../../test-domains/recipes'
 import {ok} from '../../../../src/infra/http'
 import {randomRecipesMock} from '../../mock/random-recipes.mock'
 import {internalServerError} from '../../../../src/infra/error/http/error'
+import {promiseResolver} from '../../../index'
 
 describe('Get Random Controller', () => {
 	//<editor-fold desc="Should return 200 and 3 results">

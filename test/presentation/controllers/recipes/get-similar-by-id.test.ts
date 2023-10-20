@@ -1,8 +1,9 @@
 import 'reflect-metadata'
 import {describe, expect, jest, test} from '@jest/globals'
 import {internalServerError, missingParamError} from '../../../../src/infra/error/http/error'
-import {buildAxiosResponse, makeSut, promiseResolver} from '../../../index'
+import {buildAxiosResponse, makeSut} from '../../../test-domains/recipes'
 import {noContent} from '../../../../src/infra/http'
+import {promiseResolver} from '../../../index'
 
 describe('Get Similar By Id Comtroller', () => {
 	//<editor-fold desc="Should return MissingParamError if no id was provided">

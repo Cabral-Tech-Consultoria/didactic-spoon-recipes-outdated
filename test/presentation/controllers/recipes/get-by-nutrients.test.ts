@@ -1,7 +1,8 @@
 import 'reflect-metadata'
 import {describe, test, jest, expect} from '@jest/globals'
-import {buildAxiosResponse, makeSut, promiseResolver} from '../../../index'
+import {buildAxiosResponse, makeSut} from '../../../test-domains/recipes'
 import {internalServerError} from '../../../../src/infra/error/http/error'
+import {promiseResolver} from '../../../index'
 
 describe('Get By Nutrients Controller', () => {
 	//<editor-fold desc="Should return 204 if no data was found">

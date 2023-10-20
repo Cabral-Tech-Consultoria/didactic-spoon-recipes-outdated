@@ -1,8 +1,9 @@
 import 'reflect-metadata'
 import {describe, expect, jest, test} from '@jest/globals'
 import {noContent} from '../../../../src/infra/http'
-import {buildAxiosResponse, makeSut, promiseResolver} from '../../../index'
+import {buildAxiosResponse, makeSut} from '../../../test-domains/recipes'
 import {missingParamError} from '../../../../src/infra/error/http/error'
+import {promiseResolver} from '../../../index'
 
 describe('Get Auto Complete Search Controller', () => {
 	//<editor-fold desc="Should return 204 if no query was provided">

@@ -1,8 +1,9 @@
 import 'reflect-metadata'
 import {describe, expect, jest, test} from '@jest/globals'
-import {buildAxiosResponse, makeSut, promiseResolver} from '../../../index'
+import {buildAxiosResponse, makeSut} from '../../../test-domains/recipes'
 import {internalServerError, missingParamError} from '../../../../src/infra/error/http/error'
 import {noContent} from '../../../../src/infra/http'
+import {promiseResolver} from '../../../index'
 
 describe('Get By Ingredients Controller', () => {
 	//<editor-fold desc="Should return MissingParamError if no ingredient was provided">

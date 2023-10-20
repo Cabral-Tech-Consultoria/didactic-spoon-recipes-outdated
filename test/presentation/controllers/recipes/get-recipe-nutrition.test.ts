@@ -1,7 +1,8 @@
 import 'reflect-metadata'
 import {describe, expect, jest, test} from '@jest/globals'
 import {badRequestError, internalServerError, missingParamError} from '../../../../src/infra/error/http/error'
-import {buildAxiosResponse, makeSut, promiseResolver} from '../../../index'
+import {buildAxiosResponse, makeSut} from '../../../test-domains/recipes'
+import {promiseResolver} from '../../../index'
 
 describe('Get Nutrition By Recipe Controller', () => {
 	//<editor-fold desc="Should return MissingParamError if no id was provided">
