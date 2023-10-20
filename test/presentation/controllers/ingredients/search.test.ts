@@ -2,7 +2,7 @@ import {describe, expect, jest, test} from '@jest/globals'
 import {makeSut} from '../../../test-domains/ingredients'
 import {buildAxiosResponse, promiseResolver} from '../../../index'
 import {noContent} from '../../../../src/infra/http'
-import {internalServerError} from '../../../../src/infra/error/http/error'
+import {internalServerError, missingParamError} from '../../../../src/infra/error/http/error'
 
 describe('Search Ingredients', () => {
 	//<editor-fold desc="Should return 204 if no data was found">
@@ -44,5 +44,12 @@ describe('Search Ingredients', () => {
 	})
 	//</editor-fold>
 
+	test('Should return MissingParamError if query was not provided', async () => {
+		const { controller } = makeSut()
 
+		const response = await controller.search()
+
+		expect(JSON.parse(response.body)).toEqual(JSON.parse(missingParamError('query').body))
+		expect(response.statusCode).toBe(missingParamError('query').statusCode)
+	})
 })
