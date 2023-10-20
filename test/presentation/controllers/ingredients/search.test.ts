@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import {describe, expect, jest, test} from '@jest/globals'
 import {makeSut} from '../../../test-domains/ingredients'
 import {buildAxiosResponse, promiseResolver} from '../../../index'
@@ -44,6 +45,7 @@ describe('Search Ingredients', () => {
 	})
 	//</editor-fold>
 
+	//<editor-fold desc="Should return MissingParamError if query was not provided">
 	test('Should return MissingParamError if query was not provided', async () => {
 		const { controller } = makeSut()
 
@@ -52,4 +54,5 @@ describe('Search Ingredients', () => {
 		expect(JSON.parse(response.body)).toEqual(JSON.parse(missingParamError('query').body))
 		expect(response.statusCode).toBe(missingParamError('query').statusCode)
 	})
+	//</editor-fold>
 })
