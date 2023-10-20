@@ -1,4 +1,4 @@
-const getProperty = <T, K extends keyof T>(object: T, keyName: K): T[K] =>  {
+export const getProperty = <T, K extends keyof T>(object: T, keyName: K): T[K] =>  {
 	return object[keyName]
 }
 
