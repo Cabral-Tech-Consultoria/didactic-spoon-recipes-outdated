@@ -1,4 +1,5 @@
 import {ImageType} from './recipe-info.interface'
+import {ICaloricBreakDown, INutrient, IProperty} from './nutrition.interface'
 
 export interface IRecipeIngredientsInfo {
   id: number,
@@ -25,4 +26,36 @@ export interface IIngredient {
   unit: string,
   unitLong: string,
   unitShort: string
+}
+
+export interface IIngredientInfo {
+  id: number,
+  original: string,
+  originalName: string,
+  name: string,
+  amount: number,
+  unit: string,
+  unitShort: string,
+  unitLong: string,
+  possibleUnits: string[],
+  estimatedCost: {
+    value: number,
+    unit: string
+  },
+  consistency: string,
+  shoppingListUnits: string[],
+  aisle: string,
+  image: string,
+  meta: string[],
+  nutrition: {
+    nutrients: INutrient[],
+    properties: IProperty[],
+    flavonoids: IProperty[],
+    caloricBreakdown: ICaloricBreakDown,
+    weightPerServing: {
+      amount: number,
+      unit: string
+    }
+  },
+  categoryPath: string[]
 }
