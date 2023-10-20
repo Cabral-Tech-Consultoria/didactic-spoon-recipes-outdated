@@ -22,7 +22,18 @@ export const buildIngredientsService = () => {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		search(params?: QueryIngredientSearch): Promise<AxiosResponse<IIngredientSearchList>> {
 			return Promise.resolve(buildAxiosResponse({
-				results: [],
+				results: [
+					{
+						'id': 19400,
+						'name': 'banana chips',
+						'image': 'banana-chips.jpg'
+					},
+					{
+						'id': 93779,
+						'name': 'banana liqueur',
+						'image': 'limoncello.jpg'
+					}
+				],
 				offset: 0,
 				number: 0,
 				totalResults: 0
