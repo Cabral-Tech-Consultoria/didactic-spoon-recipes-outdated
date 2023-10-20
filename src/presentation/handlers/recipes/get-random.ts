@@ -4,7 +4,7 @@ import {ConvertTo} from '../../../utils/convertion/converter'
 import {QueryRandom} from '../../../infra/protocols/interfaces/query-random.intreface'
 import {DIContainerConfig} from '../../../infra/dependency-injection/types.di'
 import {RecipeController} from '../../controllers/recipes/recipe.controller'
-import {RecipeService} from '../../../infra/http'
+import {RecipeService} from '../../../domain/services/recipe.service'
 
 export const handle: Handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 	DIContainerConfig.bindClass(RecipeController)

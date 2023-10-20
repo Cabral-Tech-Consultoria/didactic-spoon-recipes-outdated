@@ -16,7 +16,7 @@ import {INutrition} from '../../../domain/protocols/interfaces/nutrition.interfa
 import {QuerySimilar} from '../../../infra/protocols/interfaces/query-similar.interface'
 import {IRecipeController} from './protocols/i-recipe.controller'
 import {injectable} from 'inversify'
-import {IRecipeService} from '../../../infra/http/services/protocols/i-recipe.service'
+import {IRecipeService} from '../../../domain/services/protocols/i-recipe.service'
 
 @injectable()
 export class RecipeController implements IRecipeController {
