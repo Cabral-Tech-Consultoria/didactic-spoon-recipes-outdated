@@ -7,7 +7,12 @@ describe('Search Ingredients', () => {
 	test('Should return 204 if no data was found', async () => {
 		const { service, controller } = makeSut()
 
-		const mock = promiseResolver(buildAxiosResponse([]))()
+		const mock = promiseResolver(buildAxiosResponse({
+			results: [],
+			offset: 0,
+			number: 0,
+			totalResults: 0
+		}))()
 
 		jest
 			.spyOn(service, 'search')
