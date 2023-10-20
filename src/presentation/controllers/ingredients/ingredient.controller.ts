@@ -4,9 +4,12 @@ import {APIGatewayProxyResult} from 'aws-lambda'
 import {IIngredientService} from '../../../domain/services/protocols/i-ingredient.service'
 import {noContent, ok} from '../../../infra/http'
 import {internalServerError, missingParamError} from '../../../infra/error/http/error'
+import {inject, injectable} from 'inversify'
+import {TYPES_DI} from '../../../infra/dependency-injection/types.di'
 
+@injectable()
 export class IngredientController implements IIngredientController {
-	constructor(private service: IIngredientService) {}
+	constructor(@inject(TYPES_DI.IngredientService) private service: IIngredientService) {}
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	async search(params?: QueryIngredientSearch): Promise<APIGatewayProxyResult> {
 		try {

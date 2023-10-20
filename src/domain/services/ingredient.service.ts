@@ -3,7 +3,9 @@ import {ConstructHttpInstance} from '../../infra/http'
 import {IIngredientService} from './protocols/i-ingredient.service'
 import {QueryIngredientSearch} from '../../infra/protocols/interfaces/query-ingredient-search.interface'
 import {IIngredientSearchList} from '../protocols/interfaces/ingredient-search.interface'
+import {injectable} from 'inversify'
 
+@injectable()
 export class IngredientService implements IIngredientService {
 	private http: AxiosInstance
 	constructor() {
