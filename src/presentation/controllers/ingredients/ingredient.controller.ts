@@ -3,9 +3,11 @@ import {QueryIngredientSearch} from '../../../infra/protocols/interfaces/query-i
 import {APIGatewayProxyResult} from 'aws-lambda'
 import {IIngredientService} from '../../../domain/services/protocols/i-ingredient.service'
 import {noContent, ok} from '../../../infra/http'
-import {internalServerError, missingParamError} from '../../../infra/error/http/error'
+import {badRequestError, internalServerError, missingParamError} from '../../../infra/error/http/error'
 import {inject, injectable} from 'inversify'
 import {TYPES_DI} from '../../../infra/dependency-injection/types.di'
+import {QueryIngredientById} from '../../../infra/protocols/interfaces/query-ingredient-by-id.interface'
+import {IIngredientInfo} from '../../../domain/protocols/interfaces/ingredient.interface'
 
 @injectable()
 export class IngredientController implements IIngredientController {
@@ -29,4 +31,21 @@ export class IngredientController implements IIngredientController {
 		}
 	}
 
+	async getIngredientById(id?: number, params?: QueryIngredientById): Promise<APIGatewayProxyResult> {
+		try {
+			if (!id) {
+				return missingParamError('id')
+			}
+
+			const { data } = await this.service.getIngredientById(id, params)
+
+			if (!data) {
+				return badRequestError()
+			}
+
+			return ok<IIngredientInfo>(data)
+		} catch {
+			return internalServerError()
+		}
+	}
 }
