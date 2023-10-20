@@ -2,12 +2,11 @@ import 'reflect-metadata'
 import {describe, expect, jest, test} from '@jest/globals'
 import {internalServerError} from '../../../../src/infra/error/http/error'
 import {
-	buildAxiosResponse,
 	makeSut,
 	mockedGetData
 } from '../../../test-domains/recipes'
 import {AxiosResponse} from 'axios'
-import {promiseResolver} from '../../../index'
+import {buildAxiosResponse, promiseResolver} from '../../../index'
 
 describe('Get Controller', () => {
 	//<editor-fold desc="Should return 204 if no results were found">

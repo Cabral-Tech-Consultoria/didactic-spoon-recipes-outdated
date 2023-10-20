@@ -1,4 +1,4 @@
-import {AxiosResponse, InternalAxiosRequestConfig} from 'axios'
+import {AxiosResponse} from 'axios'
 import {IRecipe, ISimilarRecipe} from '../../../src/domain/protocols/interfaces/recipe.interface'
 import {IRandomRecipes, IRecipeInfo} from '../../../src/domain/protocols/interfaces/recipe-info.interface'
 import {IRecipeService} from '../../../src/domain/services/protocols/i-recipe.service'
@@ -12,6 +12,7 @@ import {QueryRandom} from '../../../src/infra/protocols/interfaces/query-random.
 import {INutrition} from '../../../src/domain/protocols/interfaces/nutrition.interface'
 import {QuerySimilar} from '../../../src/infra/protocols/interfaces/query-similar.interface'
 import {RecipeController} from '../../../src/presentation/controllers/recipes/recipe.controller'
+import {buildAxiosResponse} from '../../index'
 
 export const makeSut = () => {
 	const service = buildRecipeService()
@@ -20,16 +21,6 @@ export const makeSut = () => {
 	return {
 		service,
 		controller
-	}
-}
-
-export const buildAxiosResponse = <T>(data: T): AxiosResponse => {
-	return {
-		data,
-		status: 200,
-		statusText: 'text',
-		headers: {},
-		config: {} as InternalAxiosRequestConfig<unknown>,
 	}
 }
 
