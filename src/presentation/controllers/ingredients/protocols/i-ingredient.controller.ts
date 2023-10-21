@@ -4,9 +4,11 @@ import {QueryIngredientById} from '../../../../infra/protocols/interfaces/query-
 import {
 	QueryComputeIngredientNutrientAmount
 } from '../../../../infra/protocols/interfaces/query-compute-ingredient-nutrient-amount.interface'
+import {QueryConvertAmounts} from '../../../../infra/protocols/interfaces/query-convert-amounts.interface'
 
 export interface IIngredientController {
   search(params?: QueryIngredientSearch): Promise<APIGatewayProxyResult>
   getIngredientById(id?: number, params?: QueryIngredientById): Promise<APIGatewayProxyResult>
   computeIngredientNutrientAmount(id?: number, params?: QueryComputeIngredientNutrientAmount): Promise<APIGatewayProxyResult>
+  convertAmounts(params?: QueryConvertAmounts): Promise<APIGatewayProxyResult>
 }

@@ -16,8 +16,10 @@ import {IIngredientInfo} from '../../../domain/protocols/interfaces/ingredient.i
 import {
 	QueryComputeIngredientNutrientAmount
 } from '../../../infra/protocols/interfaces/query-compute-ingredient-nutrient-amount.interface'
-import {validateComputeIngredientNutrientAmount} from '../../../main/validations/ingredients'
+import {validateRequiredParams} from '../../../main/validations/ingredients'
 import {NutrientAmount} from '../../../domain/protocols/interfaces/nutrient-amount.interface'
+import {QueryConvertAmounts} from '../../../infra/protocols/interfaces/query-convert-amounts.interface'
+import {AmountConversion} from '../../../domain/protocols/interfaces/amount-conversion.interface'
 
 @injectable()
 export class IngredientController implements IIngredientController {
@@ -68,7 +70,10 @@ export class IngredientController implements IIngredientController {
 				return badRequestError()
 			}
 
-			const missingParams = validateComputeIngredientNutrientAmount(params!)
+			const missingParams = validateRequiredParams<QueryComputeIngredientNutrientAmount>(
+				params!,
+				['nutrient', 'target']
+			)
 
 			if (missingParams.length) {
 				return missingParamError(missingParams.join(', '))
@@ -84,6 +89,37 @@ export class IngredientController implements IIngredientController {
 		} catch (e) {
 			return internalServerError()
 		}
+	}
 
+	async convertAmounts(params?: QueryConvertAmounts): Promise<APIGatewayProxyResult> {
+		try {
+			if (!params) {
+				return badRequestError()
+			}
+
+			const requiredParamsMissing = validateRequiredParams<QueryConvertAmounts>(
+				params!,
+				[
+					'ingredientName',
+					'sourceAmount',
+					'sourceUnit',
+					'targetUnit',
+				]
+			)
+
+			if (requiredParamsMissing.length) {
+				return missingParamError(requiredParamsMissing.join(','))
+			}
+
+			const { data } = await this.service.convertAmounts(params)
+
+			if (!data) {
+				return badRequestError()
+			}
+
+			return ok<AmountConversion>(data)
+		} catch {
+			return internalServerError()
+		}
 	}
 }
