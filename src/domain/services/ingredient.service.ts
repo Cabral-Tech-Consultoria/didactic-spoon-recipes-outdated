@@ -10,12 +10,16 @@ import {
 	QueryComputeIngredientNutrientAmount
 } from '../../infra/protocols/interfaces/query-compute-ingredient-nutrient-amount.interface'
 import {NutrientAmount} from '../protocols/interfaces/nutrient-amount.interface'
+import {QueryConvertAmounts} from '../../infra/protocols/interfaces/query-convert-amounts.interface'
+import {AmountConversion} from '../protocols/interfaces/amount-conversion.interface'
 
 @injectable()
 export class IngredientService implements IIngredientService {
 	private http: AxiosInstance
+	private httpRecipe: AxiosInstance
 	constructor() {
 		this.http = ConstructHttpInstance('/food/ingredients')
+		this.httpRecipe = ConstructHttpInstance('/recipes')
 	}
 
 	async search(params?: QueryIngredientSearch): Promise<AxiosResponse<IIngredientSearchList>> {
@@ -28,5 +32,9 @@ export class IngredientService implements IIngredientService {
 
 	async computeIngredientNutrientAmount(id?: number, params?: QueryComputeIngredientNutrientAmount): Promise<AxiosResponse<NutrientAmount>> {
 		return this.http.get<NutrientAmount>(`/${id}/amount`, { params })
+	}
+
+	async convertAmounts(params?: QueryConvertAmounts): Promise<AxiosResponse<AmountConversion>> {
+		return this.httpRecipe.get<AmountConversion>('/convert', { params })
 	}
 }

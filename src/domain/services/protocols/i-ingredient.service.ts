@@ -7,9 +7,12 @@ import {
 	QueryComputeIngredientNutrientAmount
 } from '../../../infra/protocols/interfaces/query-compute-ingredient-nutrient-amount.interface'
 import {NutrientAmount} from '../../protocols/interfaces/nutrient-amount.interface'
+import {QueryConvertAmounts} from '../../../infra/protocols/interfaces/query-convert-amounts.interface'
+import {AmountConversion} from '../../protocols/interfaces/amount-conversion.interface'
 
 export interface IIngredientService {
   search(params?: QueryIngredientSearch): Promise<AxiosResponse<IIngredientSearchList>>
   getIngredientById(id?: number, params?: QueryIngredientById):Promise<AxiosResponse<IIngredientInfo>>
   computeIngredientNutrientAmount(id?: number, params?: QueryComputeIngredientNutrientAmount): Promise<AxiosResponse<NutrientAmount>>
+  convertAmounts(params?: QueryConvertAmounts): Promise<AxiosResponse<AmountConversion>>
 }
