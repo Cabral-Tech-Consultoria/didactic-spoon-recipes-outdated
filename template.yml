@@ -156,3 +156,17 @@ Resources:
           Properties:
             Path: /ingredients/compute/{id}
             Method: get
+
+  ConvertAmounts:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: built/src/presentation/handlers/ingredients/convert-amounts.handle
+      Runtime: nodejs18.x
+      Timeout: 30
+      Events:
+        CreateBooks:
+          Type: Api
+          Properties:
+            Path: /ingredients/convert
+            Method: get
