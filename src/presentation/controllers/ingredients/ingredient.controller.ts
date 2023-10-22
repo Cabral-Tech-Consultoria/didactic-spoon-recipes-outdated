@@ -25,6 +25,8 @@ import {
 import {
 	AutocompleteIngredientSearch
 } from '../../../domain/protocols/interfaces/autocomplete-ingredient-search.interface'
+import {QueryIngredientSubstitutes} from '../../../infra/protocols/interfaces/query-ingredient-substitutes.interface'
+import {IngredientSubstitutes} from '../../../domain/protocols/interfaces/ingredient-substitutes.interface'
 
 @injectable()
 export class IngredientController implements IIngredientController {
@@ -143,6 +145,24 @@ export class IngredientController implements IIngredientController {
 			return ok<AutocompleteIngredientSearch[]>(data)
 		} catch {
 			return invalidParamError()
+		}
+	}
+
+	async getIngredientSubstitutes(params?: QueryIngredientSubstitutes): Promise<APIGatewayProxyResult> {
+		try {
+			if (!params?.ingredientName) {
+				return badRequestError()
+			}
+
+			const { data } = await this.service.getIngredientSubstitutes(params)
+
+			if (!data) {
+				return badRequestError()
+			}
+
+			return ok<IngredientSubstitutes>(data)
+		} catch {
+			return internalServerError()
 		}
 	}
 }

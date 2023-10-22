@@ -8,6 +8,9 @@ import {QueryConvertAmounts} from '../../../../infra/protocols/interfaces/query-
 import {
 	QueryAutocompleteIngredientSearch
 } from '../../../../infra/protocols/interfaces/query-autocomplete-ingredient-search.interface'
+import {
+	QueryIngredientSubstitutes
+} from '../../../../infra/protocols/interfaces/query-ingredient-substitutes.interface'
 
 export interface IIngredientController {
   search(params?: QueryIngredientSearch): Promise<APIGatewayProxyResult>
@@ -15,4 +18,5 @@ export interface IIngredientController {
   computeIngredientNutrientAmount(id?: number, params?: QueryComputeIngredientNutrientAmount): Promise<APIGatewayProxyResult>
   convertAmounts(params?: QueryConvertAmounts): Promise<APIGatewayProxyResult>
   autocompleteIngredientsSearch(params?: QueryAutocompleteIngredientSearch): Promise<APIGatewayProxyResult>
+  getIngredientSubstitutes(params?: QueryIngredientSubstitutes): Promise<APIGatewayProxyResult>
 }
