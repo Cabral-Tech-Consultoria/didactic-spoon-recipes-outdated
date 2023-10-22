@@ -13,6 +13,7 @@ import {
 	QueryComputeIngredientNutrientAmount,
 	QueryConvertAmounts
 } from '../../infra/protocols/interfaces'
+import {AutocompleteIngredientSearch} from '../protocols/interfaces/autocomplete-ingredient-search.interface'
 
 @injectable()
 export class IngredientService implements IIngredientService {
@@ -39,7 +40,7 @@ export class IngredientService implements IIngredientService {
 		return this.httpRecipe.get<AmountConversion>('/convert', { params })
 	}
 
-	async autocompleteIngredientsSearch(params?: QueryAutocompleteIngredientSearch): Promise<AxiosResponse<AmountConversion>> {
+	async autocompleteIngredientsSearch(params?: QueryAutocompleteIngredientSearch): Promise<AxiosResponse<AutocompleteIngredientSearch[]>> {
 		return this.http.get('/autocomplete', { params })
 	}
 }

@@ -15,6 +15,9 @@ import {
 	QueryComputeIngredientNutrientAmount,
 	QueryConvertAmounts
 } from '../../../src/infra/protocols/interfaces'
+import {
+	AutocompleteIngredientSearch
+} from '../../../src/domain/protocols/interfaces/autocomplete-ingredient-search.interface'
 
 export const makeSut = () => {
 	const service = buildIngredientsService()
@@ -49,7 +52,7 @@ export const buildIngredientsService = () => {
 		}
 
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		async autocompleteIngredientsSearch(params?: QueryAutocompleteIngredientSearch): Promise<AxiosResponse<AmountConversion>> {
+		async autocompleteIngredientsSearch(params?: QueryAutocompleteIngredientSearch): Promise<AxiosResponse<AutocompleteIngredientSearch[]>> {
 			return Promise.resolve(buildAxiosResponse(mockAutocompleteIngredientsSearch))
 		}
 
