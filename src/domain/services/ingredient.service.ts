@@ -1,17 +1,18 @@
 import {AxiosInstance, AxiosResponse} from 'axios'
 import {ConstructHttpInstance} from '../../infra/http'
 import {IIngredientService} from './protocols/i-ingredient.service'
-import {QueryIngredientSearch} from '../../infra/protocols/interfaces/query-ingredient-search.interface'
 import {IIngredientSearchList} from '../protocols/interfaces/ingredient-search.interface'
 import {injectable} from 'inversify'
-import {QueryIngredientById} from '../../infra/protocols/interfaces/query-ingredient-by-id.interface'
 import {IIngredientInfo} from '../protocols/interfaces/ingredient.interface'
-import {
-	QueryComputeIngredientNutrientAmount
-} from '../../infra/protocols/interfaces/query-compute-ingredient-nutrient-amount.interface'
 import {NutrientAmount} from '../protocols/interfaces/nutrient-amount.interface'
-import {QueryConvertAmounts} from '../../infra/protocols/interfaces/query-convert-amounts.interface'
 import {AmountConversion} from '../protocols/interfaces/amount-conversion.interface'
+import {
+	QueryAutocompleteIngredientSearch,
+	QueryIngredientSearch,
+	QueryIngredientById,
+	QueryComputeIngredientNutrientAmount,
+	QueryConvertAmounts
+} from '../../infra/protocols/interfaces'
 
 @injectable()
 export class IngredientService implements IIngredientService {
@@ -36,5 +37,9 @@ export class IngredientService implements IIngredientService {
 
 	async convertAmounts(params?: QueryConvertAmounts): Promise<AxiosResponse<AmountConversion>> {
 		return this.httpRecipe.get<AmountConversion>('/convert', { params })
+	}
+
+	async autocompleteIngredientsSearch(params?: QueryAutocompleteIngredientSearch): Promise<AxiosResponse<AmountConversion>> {
+		return this.http.get('/autocomplete', { params })
 	}
 }
