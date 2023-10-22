@@ -20,6 +20,9 @@ import {validateRequiredParams} from '../../../main/validations/ingredients'
 import {NutrientAmount} from '../../../domain/protocols/interfaces/nutrient-amount.interface'
 import {QueryConvertAmounts} from '../../../infra/protocols/interfaces/query-convert-amounts.interface'
 import {AmountConversion} from '../../../domain/protocols/interfaces/amount-conversion.interface'
+import {
+	QueryAutocompleteIngredientSearch
+} from '../../../infra/protocols/interfaces/query-autocomplete-ingredient-search.interface'
 
 @injectable()
 export class IngredientController implements IIngredientController {
@@ -121,5 +124,9 @@ export class IngredientController implements IIngredientController {
 		} catch {
 			return internalServerError()
 		}
+	}
+
+	async autocompleteIngredientsSearch(params?: QueryAutocompleteIngredientSearch): Promise<APIGatewayProxyResult> {
+		return ok(params)
 	}
 }
