@@ -170,3 +170,17 @@ Resources:
           Properties:
             Path: /ingredients/convert
             Method: get
+
+  AutocompleteIngredientsSearch:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: built/src/presentation/handlers/ingredients/autocomplete-ingredients-search.handle
+      Runtime: nodejs18.x
+      Timeout: 30
+      Events:
+        CreateBooks:
+          Type: Api
+          Properties:
+            Path: /ingredients/autocomplete
+            Method: get
