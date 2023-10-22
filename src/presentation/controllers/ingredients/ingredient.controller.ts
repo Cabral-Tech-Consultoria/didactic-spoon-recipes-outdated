@@ -22,6 +22,9 @@ import {
 	QueryComputeIngredientNutrientAmount,
 	QueryConvertAmounts
 } from '../../../infra/protocols/interfaces'
+import {
+	AutocompleteIngredientSearch
+} from '../../../domain/protocols/interfaces/autocomplete-ingredient-search.interface'
 
 @injectable()
 export class IngredientController implements IIngredientController {
@@ -126,6 +129,20 @@ export class IngredientController implements IIngredientController {
 	}
 
 	async autocompleteIngredientsSearch(params?: QueryAutocompleteIngredientSearch): Promise<APIGatewayProxyResult> {
-		return ok(params)
+		try {
+			if (!params || !params.query) {
+				return badRequestError()
+			}
+
+			const { data } = await this.service.autocompleteIngredientsSearch(params)
+
+			if (!data) {
+				return noContent()
+			}
+
+			return ok<AutocompleteIngredientSearch[]>(data)
+		} catch {
+			return invalidParamError()
+		}
 	}
 }
