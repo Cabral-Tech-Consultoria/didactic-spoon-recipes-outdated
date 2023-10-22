@@ -1,5 +1,4 @@
 import {IIngredientController} from './protocols/i-ingredient.controller'
-import {QueryIngredientSearch} from '../../../infra/protocols/interfaces/query-ingredient-search.interface'
 import {APIGatewayProxyResult} from 'aws-lambda'
 import {IIngredientService} from '../../../domain/services/protocols/i-ingredient.service'
 import {noContent, ok} from '../../../infra/http'
@@ -11,18 +10,18 @@ import {
 } from '../../../infra/error/http/error'
 import {inject, injectable} from 'inversify'
 import {TYPES_DI} from '../../../infra/dependency-injection/types.di'
-import {QueryIngredientById} from '../../../infra/protocols/interfaces/query-ingredient-by-id.interface'
 import {IIngredientInfo} from '../../../domain/protocols/interfaces/ingredient.interface'
-import {
-	QueryComputeIngredientNutrientAmount
-} from '../../../infra/protocols/interfaces/query-compute-ingredient-nutrient-amount.interface'
+
 import {validateRequiredParams} from '../../../main/validations/ingredients'
 import {NutrientAmount} from '../../../domain/protocols/interfaces/nutrient-amount.interface'
-import {QueryConvertAmounts} from '../../../infra/protocols/interfaces/query-convert-amounts.interface'
 import {AmountConversion} from '../../../domain/protocols/interfaces/amount-conversion.interface'
 import {
-	QueryAutocompleteIngredientSearch
-} from '../../../infra/protocols/interfaces/query-autocomplete-ingredient-search.interface'
+	QueryAutocompleteIngredientSearch,
+	QueryIngredientSearch,
+	QueryIngredientById,
+	QueryComputeIngredientNutrientAmount,
+	QueryConvertAmounts
+} from '../../../infra/protocols/interfaces'
 
 @injectable()
 export class IngredientController implements IIngredientController {
