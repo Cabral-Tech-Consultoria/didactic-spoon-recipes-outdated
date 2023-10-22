@@ -14,6 +14,8 @@ import {
 	QueryConvertAmounts
 } from '../../infra/protocols/interfaces'
 import {AutocompleteIngredientSearch} from '../protocols/interfaces/autocomplete-ingredient-search.interface'
+import {QueryIngredientSubstitutes} from '../../infra/protocols/interfaces/query-ingredient-substitutes.interface'
+import {IngredientSubstitutes} from '../protocols/interfaces/ingredient-substitutes.interface'
 
 @injectable()
 export class IngredientService implements IIngredientService {
@@ -42,5 +44,9 @@ export class IngredientService implements IIngredientService {
 
 	async autocompleteIngredientsSearch(params?: QueryAutocompleteIngredientSearch): Promise<AxiosResponse<AutocompleteIngredientSearch[]>> {
 		return this.http.get('/autocomplete', { params })
+	}
+
+	async getIngredientSubstitutes(params?: QueryIngredientSubstitutes): Promise<AxiosResponse<IngredientSubstitutes>> {
+		return this.http.get<IngredientSubstitutes>('/substitutes', { params })
 	}
 }

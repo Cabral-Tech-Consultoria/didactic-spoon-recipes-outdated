@@ -11,6 +11,8 @@ import {
 	QueryConvertAmounts
 } from '../../../infra/protocols/interfaces'
 import {AutocompleteIngredientSearch} from '../../protocols/interfaces/autocomplete-ingredient-search.interface'
+import {QueryIngredientSubstitutes} from '../../../infra/protocols/interfaces/query-ingredient-substitutes.interface'
+import {IngredientSubstitutes} from '../../protocols/interfaces/ingredient-substitutes.interface'
 
 export interface IIngredientService {
   search(params?: QueryIngredientSearch): Promise<AxiosResponse<IIngredientSearchList>>
@@ -18,4 +20,5 @@ export interface IIngredientService {
   computeIngredientNutrientAmount(id?: number, params?: QueryComputeIngredientNutrientAmount): Promise<AxiosResponse<NutrientAmount>>
   convertAmounts(params?: QueryConvertAmounts): Promise<AxiosResponse<AmountConversion>>
   autocompleteIngredientsSearch(params?: QueryAutocompleteIngredientSearch): Promise<AxiosResponse<AutocompleteIngredientSearch[]>>
+  getIngredientSubstitutes(params?: QueryIngredientSubstitutes): Promise<AxiosResponse<IngredientSubstitutes>>
 }

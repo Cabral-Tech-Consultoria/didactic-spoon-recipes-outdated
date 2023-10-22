@@ -18,6 +18,10 @@ import {
 import {
 	AutocompleteIngredientSearch
 } from '../../../src/domain/protocols/interfaces/autocomplete-ingredient-search.interface'
+import {
+	QueryIngredientSubstitutes
+} from '../../../src/infra/protocols/interfaces/query-ingredient-substitutes.interface'
+import {IngredientSubstitutes} from '../../../src/domain/protocols/interfaces/ingredient-substitutes.interface'
 
 export const makeSut = () => {
 	const service = buildIngredientsService()
@@ -56,6 +60,11 @@ export const buildIngredientsService = () => {
 			return Promise.resolve(buildAxiosResponse(mockAutocompleteIngredientsSearch))
 		}
 
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		getIngredientSubstitutes(params?: QueryIngredientSubstitutes): Promise<AxiosResponse<IngredientSubstitutes>> {
+			return Promise.resolve(buildAxiosResponse(mockIngredientSubstitutes))
+		}
+
 	}
 
 	return new IngredientsServiceStub()
@@ -72,3 +81,4 @@ export const mockGetIngredientById = {'id':9266,'original':'pineapples','origina
 export const mockComputeIngredientNutrientAmount = {'amount': 65.32,'unit': 'oz'}
 export const mockConvertAmount = {'sourceAmount':2.5,'sourceUnit':'cups','targetAmount':312.5,'targetUnit':'grams','answer':'2.5 cups flour translates to 312.5 grams.'}
 export const mockAutocompleteIngredientsSearch = [{'name':'apple','image':'apple.jpg','id':9003,'aisle':'Produce','possibleUnits':['small','large','piece','slice','g','extra small','medium','oz','cup slice','cup','serving']},{'name':'applesauce','image':'applesauce.png','id':9019,'aisle':'Canned and Jarred','possibleUnits':['g','oz','cup','serving','tablespoon']},{'name':'apple juice','image':'apple-juice.jpg','id':9016,'aisle':'Beverages','possibleUnits':['g','drink box','fl oz','oz','teaspoon','cup','serving','tablespoon']},{'name':'apple cider','image':'apple-cider.jpg','id':1009016,'aisle':'Beverages','possibleUnits':['g','drink box','fl oz','oz','teaspoon','bottle NFS','cup','serving','tablespoon']},{'name':'apple jelly','image':'apple-jelly.jpg','id':10019297,'aisle':'Nut butters, Jams, and Honey','possibleUnits':['g','oz','packet','teaspoon','cup','serving','tablespoon']}]
+export const mockIngredientSubstitutes = {'ingredient':'butter','substitutes':['1 cup = 7/8 cup shortening and 1/2 tsp salt','1 cup = 7/8 cup vegetable oil + 1/2 tsp salt','1/2 cup = 1/4 cup buttermilk + 1/4 cup unsweetened applesauce','1 cup = 1 cup margarine'],'message':'Found 4 substitutes for the ingredient.'}
