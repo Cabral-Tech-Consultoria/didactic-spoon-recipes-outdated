@@ -144,7 +144,7 @@ export class IngredientController implements IIngredientController {
 
 			return ok<AutocompleteIngredientSearch[]>(data)
 		} catch {
-			return invalidParamError()
+			return internalServerError()
 		}
 	}
 
