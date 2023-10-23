@@ -1,10 +1,13 @@
 import axios, {AxiosInstance} from 'axios'
+import { config } from 'dotenv'
 
-export const ConstructHttpInstance = (prefix: string): AxiosInstance => {
+export const FoodHttpFactory = (prefix: string): AxiosInstance => {
+	config()
+
 	return axios.create({
 		baseURL: `https://api.spoonacular.com/${prefix}`,
 		timeout: 6000,
-		headers: {'x-api-key': 'f01c59785f7a44bea435e9c72d36c605'}
+		headers: {'x-api-key': String(process.env.FOOD_API_KEY)}
 	})
 }
 
