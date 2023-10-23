@@ -1,5 +1,5 @@
 import {AxiosInstance, AxiosResponse} from 'axios'
-import {ConstructHttpInstance} from '../../infra/http'
+import {FoodHttpFactory} from '../../infra/http'
 import {IIngredientService} from './protocols/i-ingredient.service'
 import {IIngredientSearchList} from '../protocols/interfaces/ingredient-search.interface'
 import {injectable} from 'inversify'
@@ -22,8 +22,8 @@ export class IngredientService implements IIngredientService {
 	private http: AxiosInstance
 	private httpRecipe: AxiosInstance
 	constructor() {
-		this.http = ConstructHttpInstance('/food/ingredients')
-		this.httpRecipe = ConstructHttpInstance('/recipes')
+		this.http = FoodHttpFactory('/food/ingredients')
+		this.httpRecipe = FoodHttpFactory('/recipes')
 	}
 
 	async search(params?: QueryIngredientSearch): Promise<AxiosResponse<IIngredientSearchList>> {

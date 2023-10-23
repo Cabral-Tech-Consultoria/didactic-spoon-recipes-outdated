@@ -1,5 +1,5 @@
 import {AxiosInstance, AxiosResponse} from 'axios'
-import {ConstructHttpInstance} from '../../infra/http'
+import {FoodHttpFactory} from '../../infra/http'
 import {injectable} from 'inversify'
 import {IRecipeService} from './protocols/i-recipe.service'
 import {BaseQueryStringSearch} from '../../infra/protocols/interfaces/querystring.interface'
@@ -19,7 +19,7 @@ export class RecipeService implements IRecipeService {
 	public http: AxiosInstance
 
 	constructor() {
-		this.http = ConstructHttpInstance('recipes')
+		this.http = FoodHttpFactory('recipes')
 	}
 
 	async get(params: BaseQueryStringSearch): Promise<AxiosResponse<{ results: IRecipe[] }>> {

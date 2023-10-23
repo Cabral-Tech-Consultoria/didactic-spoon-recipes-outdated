@@ -1,2 +1,2 @@
-export { ConstructHttpInstance } from './http.client'
+export { FoodHttpFactory } from './http.client'
 export { ok, noContent } from './http'
