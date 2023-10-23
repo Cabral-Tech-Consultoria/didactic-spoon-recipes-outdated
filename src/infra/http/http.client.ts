@@ -7,3 +7,13 @@ export const ConstructHttpInstance = (prefix: string): AxiosInstance => {
 		headers: {'x-api-key': 'f01c59785f7a44bea435e9c72d36c605'}
 	})
 }
+
+export const TranslationHttpFactory = (prefix: string): AxiosInstance => {
+	config()
+
+	return axios.create({
+		baseURL: `https://api.spoonacular.com/${prefix}`,
+		timeout: 6000,
+		headers: {'x-api-key': String(process.env.API_KEY)}
+	})
+}
