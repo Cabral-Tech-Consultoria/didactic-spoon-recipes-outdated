@@ -7,6 +7,7 @@ export const TYPES_DI = {
 	RecipeController: Symbol.for('RecipeController'),
 	IngredientService: Symbol.for('IngredientService'),
 	IngredientController: Symbol.for('IngredientController'),
+	TranslationService: Symbol.for('TranslationService'),
 }
 
 export class DIContainerConfig {
