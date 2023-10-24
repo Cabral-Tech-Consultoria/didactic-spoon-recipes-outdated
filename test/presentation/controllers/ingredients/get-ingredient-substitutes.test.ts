@@ -18,12 +18,12 @@ describe('Get Ingredient Substitutes Controller', () => {
 
 	//<editor-fold desc="Should return BadRequestError if no data was returned">
 	test('Should return BadRequestError if no data was returned', async () => {
-		const { controller, service } = makeSut()
+		const { controller, ingredientService } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse(null))()
 
 		jest
-			.spyOn(service, 'getIngredientSubstitutes')
+			.spyOn(ingredientService, 'getIngredientSubstitutes')
 			.mockReturnValueOnce(mock)
 
 		const response = await controller.getIngredientSubstitutes({ ingredientName: 'chuck' })

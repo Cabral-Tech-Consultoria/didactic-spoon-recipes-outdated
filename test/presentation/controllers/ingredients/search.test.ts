@@ -8,7 +8,7 @@ import {internalServerError, missingParamError} from '../../../../src/infra/erro
 describe('Search Ingredients', () => {
 	//<editor-fold desc="Should return 204 if no data was found">
 	test('Should return 204 if no data was found', async () => {
-		const { service, controller } = makeSut()
+		const { ingredientService, controller } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse({
 			results: [],
@@ -18,7 +18,7 @@ describe('Search Ingredients', () => {
 		}))()
 
 		jest
-			.spyOn(service, 'search')
+			.spyOn(ingredientService, 'search')
 			.mockReturnValueOnce(mock)
 
 		const response = await controller.search({ query: 'apple' })

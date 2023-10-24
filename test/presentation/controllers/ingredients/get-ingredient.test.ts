@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 import {describe, expect, jest, test} from '@jest/globals'
-import {makeSut, mockGetIngredientById} from '../../../test-domains/ingredients'
+import {makeSut, mockGetIngredientById, mockGetIngredientByIdTranslated} from '../../../test-domains/ingredients'
 import {badRequestError, internalServerError, missingParamError} from '../../../../src/infra/error/http/error'
 import {buildAxiosResponse, promiseResolver} from '../../../index'
 import {ok} from '../../../../src/infra/http'
@@ -36,12 +36,12 @@ describe('Get Ingredient By IdController', () => {
 
 	//<editor-fold desc="Should return BadRequestError if no data was found with the id provided">
 	test('Should return BadRequestError if no data was found with the id provided', async () => {
-		const { service, controller } = makeSut()
+		const { ingredientService, controller } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse(null))()
 
 		jest
-			.spyOn(service, 'getIngredientById')
+			.spyOn(ingredientService, 'getIngredientById')
 			.mockReturnValueOnce(mock)
 
 		const response = await controller.getIngredientById(123345567, { amount: 10, unit: 'grams' })
@@ -52,17 +52,23 @@ describe('Get Ingredient By IdController', () => {
 	//</editor-fold>
 
 	test('Should return 200 if a valid id was provided', async () => {
-		const { service, controller } = makeSut()
+		const { ingredientService, translationService, controller } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse(mockGetIngredientById))()
 
 		jest
-			.spyOn(service, 'getIngredientById')
+			.spyOn(ingredientService, 'getIngredientById')
 			.mockReturnValueOnce(mock)
+
+		const translateMock = promiseResolver({trans: mockGetIngredientByIdTranslated})()
+
+		jest
+			.spyOn(translationService, 'translateJSON')
+			.mockReturnValueOnce(translateMock)
 
 		const response = await controller.getIngredientById(123456, { amount: 10, unit: 'grams' })
 
-		expect(JSON.parse(response.body)).toEqual(JSON.parse(ok(mockGetIngredientById).body))
-		expect(response.statusCode).toBe(ok(mockGetIngredientById).statusCode)
+		expect(JSON.parse(response.body)).toEqual(JSON.parse(ok(mockGetIngredientByIdTranslated).body))
+		expect(response.statusCode).toBe(ok(mockGetIngredientByIdTranslated).statusCode)
 	})
 })

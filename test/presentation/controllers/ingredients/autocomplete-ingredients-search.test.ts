@@ -1,12 +1,13 @@
 import 'reflect-metadata'
 import {describe, expect, jest, test} from '@jest/globals'
-import {makeSut, mockAutocompleteIngredientsSearch} from '../../../test-domains/ingredients'
+import {
+	makeSut,
+	mockAutocompleteIngredientsSearch,
+	mockAutocompleteIngredientsSearchTranslated
+} from '../../../test-domains/ingredients'
 import {badRequestError, internalServerError} from '../../../../src/infra/error/http/error'
 import {buildAxiosResponse, promiseResolver} from '../../../index'
 import {noContent, ok} from '../../../../src/infra/http'
-import {
-	AutocompleteIngredientSearch
-} from '../../../../src/domain/protocols/interfaces/autocomplete-ingredient-search.interface'
 
 describe('Autocomplete Ingredients Search Controller', () => {
 	//<editor-fold desc="Should return BadRequestError if no query was provided">
@@ -50,12 +51,12 @@ describe('Autocomplete Ingredients Search Controller', () => {
 
 	//<editor-fold desc="Should return 204 if no data was returned">
 	test('Should return 204 if no data was returned', async () => {
-		const { controller, service } = makeSut()
+		const { controller, ingredientService } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse(null))()
 
 		jest
-			.spyOn(service, 'autocompleteIngredientsSearch')
+			.spyOn(ingredientService, 'autocompleteIngredientsSearch')
 			.mockReturnValueOnce(mock)
 
 		const response = await controller.autocompleteIngredientsSearch({ query: 'choco' })
@@ -66,13 +67,19 @@ describe('Autocomplete Ingredients Search Controller', () => {
 	//</editor-fold>
 
 	test('Should return 200 if all required params were set', async () => {
-		const { controller, service } = makeSut()
+		const { controller, ingredientService, translationService } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse(mockAutocompleteIngredientsSearch))()
 
 		jest
-			.spyOn(service, 'autocompleteIngredientsSearch')
+			.spyOn(ingredientService, 'autocompleteIngredientsSearch')
 			.mockReturnValueOnce(mock)
+
+		const mockTranslated = promiseResolver({ trans: mockAutocompleteIngredientsSearchTranslated })()
+
+		jest
+			.spyOn(translationService, 'translateJSON')
+			.mockReturnValueOnce(mockTranslated)
 
 		const response = await controller.autocompleteIngredientsSearch({
 			query: 'choco',
@@ -82,7 +89,7 @@ describe('Autocomplete Ingredients Search Controller', () => {
 			metaInformation: false
 		})
 
-		const okResponse = ok<AutocompleteIngredientSearch[]>(mockAutocompleteIngredientsSearch)
+		const okResponse = ok(mockAutocompleteIngredientsSearchTranslated)
 
 		expect(JSON.parse(response.body)).toEqual(JSON.parse(okResponse.body))
 		expect(response.statusCode).toBe(okResponse.statusCode)

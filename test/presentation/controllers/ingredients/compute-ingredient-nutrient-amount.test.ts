@@ -89,12 +89,12 @@ describe('Compute Ingredient Nutrient Amount Controller', () => {
 	//</editor-
 
 	test('Should return InvalidParamError if no data is returned', async () => {
-		const { service, controller } = makeSut()
+		const { ingredientService, controller } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse(null))()
 
 		jest
-			.spyOn(service, 'computeIngredientNutrientAmount')
+			.spyOn(ingredientService, 'computeIngredientNutrientAmount')
 			.mockReturnValueOnce(mock)
 
 		const response = await controller

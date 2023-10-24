@@ -1,10 +1,9 @@
 import 'reflect-metadata'
 import {describe, expect, jest, test} from '@jest/globals'
-import {makeSut, mockConvertAmount} from '../../../test-domains/ingredients'
+import {makeSut, mockConvertAmount, mockConvertAmountTranslated} from '../../../test-domains/ingredients'
 import {badRequestError, internalServerError, missingParamError} from '../../../../src/infra/error/http/error'
 import {buildAxiosResponse, promiseResolver} from '../../../index'
 import {ok} from '../../../../src/infra/http'
-import {AmountConversion} from '../../../../src/domain/protocols/interfaces/amount-conversion.interface'
 
 describe('Convert Amounts Controller', () => {
 	//<editor-fold desc="Should return MissingParamError if no ingredientName was provided">
@@ -106,12 +105,12 @@ describe('Convert Amounts Controller', () => {
 
 	//<editor-fold desc="Should return BadRequestError if no data was returned">
 	test('Should return BadRequestError if no data was returned', async () => {
-		const { service, controller } = makeSut()
+		const { ingredientService, controller } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse(null))()
 
 		jest
-			.spyOn(service, 'convertAmounts')
+			.spyOn(ingredientService, 'convertAmounts')
 			.mockReturnValueOnce(mock)
 
 		const response = await controller.convertAmounts({
@@ -128,13 +127,19 @@ describe('Convert Amounts Controller', () => {
 
 	//<editor-fold desc="Should return 200 and an AmountConversion object if all parameters were right">
 	test('Should return 200 and an AmountConversion object if all parameters were right', async () => {
-		const { controller, service } = makeSut()
+		const { controller, ingredientService, translationService } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse(mockConvertAmount))()
 
 		jest
-			.spyOn(service, 'convertAmounts')
+			.spyOn(ingredientService, 'convertAmounts')
 			.mockReturnValueOnce(mock)
+
+		const mockTranslated = promiseResolver({ trans: mockConvertAmountTranslated })()
+
+		jest
+			.spyOn(translationService, 'translateJSON')
+			.mockReturnValueOnce(mockTranslated)
 
 		const response = await controller.convertAmounts({
 			ingredientName: 'chocolate',
@@ -143,8 +148,8 @@ describe('Convert Amounts Controller', () => {
 			targetUnit: 'grams'
 		})
 
-		expect(JSON.parse(response.body)).toEqual(JSON.parse(ok<AmountConversion>(mockConvertAmount).body))
-		expect(response.statusCode).toBe(ok<AmountConversion>(mockConvertAmount).statusCode)
+		expect(JSON.parse(response.body)).toEqual(JSON.parse(ok(mockConvertAmountTranslated).body))
+		expect(response.statusCode).toBe(ok(mockConvertAmountTranslated).statusCode)
 	})
 	//</editor-fold>
 })
