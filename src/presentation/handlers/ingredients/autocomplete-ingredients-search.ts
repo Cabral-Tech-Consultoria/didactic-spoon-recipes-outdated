@@ -8,7 +8,7 @@ import {IIngredientController} from '../../controllers/ingredients/protocols/i-i
 import {IIngredientService} from '../../../domain/services/protocols/i-ingredient.service'
 import {
 	QueryAutocompleteIngredientSearch
-} from '../../../infra/protocols/interfaces/query-autocomplete-ingredient-search.interface'
+} from '../../../infra/protocols/interfaces'
 import {TranslationService} from '../../../domain/services/translation.service'
 import {ITranslationService} from '../../../domain/services/protocols/i-translation.service'
 

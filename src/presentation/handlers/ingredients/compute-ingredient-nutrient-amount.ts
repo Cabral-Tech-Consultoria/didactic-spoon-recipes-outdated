@@ -8,7 +8,7 @@ import {IIngredientController} from '../../controllers/ingredients/protocols/i-i
 import {IIngredientService} from '../../../domain/services/protocols/i-ingredient.service'
 import {
 	QueryComputeIngredientNutrientAmount
-} from '../../../infra/protocols/interfaces/query-compute-ingredient-nutrient-amount.interface'
+} from '../../../infra/protocols/interfaces'
 import {ITranslationService} from '../../../domain/services/protocols/i-translation.service'
 import {TranslationService} from '../../../domain/services/translation.service'
 

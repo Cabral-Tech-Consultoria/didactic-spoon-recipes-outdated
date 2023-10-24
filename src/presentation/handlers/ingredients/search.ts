@@ -4,7 +4,7 @@ import {DIContainerConfig, TYPES_DI} from '../../../infra/dependency-injection/t
 import {IngredientController} from '../../controllers/ingredients/ingredient.controller'
 import {IngredientService} from '../../../domain/services/ingredient.service'
 import {ConvertTo} from '../../../utils/convertion/converter'
-import {QueryIngredientSearch} from '../../../infra/protocols/interfaces/query-ingredient-search.interface'
+import {QueryIngredientSearch} from '../../../infra/protocols/interfaces'
 import {IIngredientController} from '../../controllers/ingredients/protocols/i-ingredient.controller'
 import {IIngredientService} from '../../../domain/services/protocols/i-ingredient.service'
 import {ITranslationService} from '../../../domain/services/protocols/i-translation.service'

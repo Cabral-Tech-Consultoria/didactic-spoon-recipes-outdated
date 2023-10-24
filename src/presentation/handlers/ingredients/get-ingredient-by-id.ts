@@ -6,7 +6,7 @@ import {IngredientService} from '../../../domain/services/ingredient.service'
 import {ConvertTo} from '../../../utils/convertion/converter'
 import {IIngredientController} from '../../controllers/ingredients/protocols/i-ingredient.controller'
 import {IIngredientService} from '../../../domain/services/protocols/i-ingredient.service'
-import {QueryIngredientById} from '../../../infra/protocols/interfaces/query-ingredient-by-id.interface'
+import {QueryIngredientById} from '../../../infra/protocols/interfaces'
 import {ITranslationService} from '../../../domain/services/protocols/i-translation.service'
 import {TranslationService} from '../../../domain/services/translation.service'
 

@@ -1,10 +1,10 @@
-import {BaseQueryStringSearch} from '../../../../infra/protocols/interfaces/querystring.interface'
+import {BaseQueryStringSearch} from '../../../../infra/protocols/interfaces'
 import {APIGatewayProxyResult} from 'aws-lambda'
-import {QueryAutocompleteSearch} from '../../../../infra/protocols/interfaces/query-autocomplete-search.interface'
-import {QueryIngredients} from '../../../../infra/protocols/interfaces/query-ingredients.interface'
+import {QueryAutocompleteSearch} from '../../../../infra/protocols/interfaces'
+import {QueryIngredients} from '../../../../infra/protocols/interfaces'
 import {INutrients} from '../../../../domain/protocols/interfaces/nutrients.interface'
-import {QueryRandom} from '../../../../infra/protocols/interfaces/query-random.intreface'
-import {QuerySimilar} from '../../../../infra/protocols/interfaces/query-similar.interface'
+import {QueryRandom} from '../../../../infra/protocols/interfaces'
+import {QuerySimilar} from '../../../../infra/protocols/interfaces'
 
 export interface IRecipeController {
   get(params: BaseQueryStringSearch): Promise<APIGatewayProxyResult>

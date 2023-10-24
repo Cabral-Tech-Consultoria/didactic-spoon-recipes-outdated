@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 import {APIGatewayProxyEvent, APIGatewayProxyResult, Handler} from 'aws-lambda'
 import {ConvertTo} from '../../../utils/convertion/converter'
-import {QueryAutocompleteSearch} from '../../../infra/protocols/interfaces/query-autocomplete-search.interface'
+import {QueryAutocompleteSearch} from '../../../infra/protocols/interfaces'
 import {DIContainerConfig, TYPES_DI} from '../../../infra/dependency-injection/types.di'
 import {RecipeController} from '../../controllers/recipes/recipe.controller'
 import {RecipeService} from '../../../domain/services/recipe.service'

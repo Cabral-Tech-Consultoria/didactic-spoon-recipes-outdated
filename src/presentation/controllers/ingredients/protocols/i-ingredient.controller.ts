@@ -1,13 +1,13 @@
-import {QueryIngredientSearch} from '../../../../infra/protocols/interfaces/query-ingredient-search.interface'
+import {QueryIngredientSearch} from '../../../../infra/protocols/interfaces'
 import {APIGatewayProxyResult} from 'aws-lambda'
-import {QueryIngredientById} from '../../../../infra/protocols/interfaces/query-ingredient-by-id.interface'
+import {QueryIngredientById} from '../../../../infra/protocols/interfaces'
 import {
 	QueryComputeIngredientNutrientAmount
-} from '../../../../infra/protocols/interfaces/query-compute-ingredient-nutrient-amount.interface'
-import {QueryConvertAmounts} from '../../../../infra/protocols/interfaces/query-convert-amounts.interface'
+} from '../../../../infra/protocols/interfaces'
+import {QueryConvertAmounts} from '../../../../infra/protocols/interfaces'
 import {
 	QueryAutocompleteIngredientSearch
-} from '../../../../infra/protocols/interfaces/query-autocomplete-ingredient-search.interface'
+} from '../../../../infra/protocols/interfaces'
 import {
 	QueryIngredientSubstitutes
 } from '../../../../infra/protocols/interfaces/query-ingredient-substitutes.interface'
