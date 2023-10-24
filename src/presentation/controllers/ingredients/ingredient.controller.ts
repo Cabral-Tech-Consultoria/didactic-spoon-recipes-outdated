@@ -17,34 +17,54 @@ import {NutrientAmount} from '../../../domain/protocols/interfaces/nutrient-amou
 import {AmountConversion} from '../../../domain/protocols/interfaces/amount-conversion.interface'
 import {
 	QueryAutocompleteIngredientSearch,
-	QueryIngredientSearch,
-	QueryIngredientById,
 	QueryComputeIngredientNutrientAmount,
-	QueryConvertAmounts
+	QueryConvertAmounts,
+	QueryIngredientById,
+	QueryIngredientSearch
 } from '../../../infra/protocols/interfaces'
 import {
 	AutocompleteIngredientSearch
 } from '../../../domain/protocols/interfaces/autocomplete-ingredient-search.interface'
 import {QueryIngredientSubstitutes} from '../../../infra/protocols/interfaces/query-ingredient-substitutes.interface'
 import {IngredientSubstitutes} from '../../../domain/protocols/interfaces/ingredient-substitutes.interface'
+import {ITranslationService} from '../../../domain/services/protocols/i-translation.service'
+import {
+	IIngredientSearch,
+} from '../../../domain/protocols/interfaces/ingredient-search.interface'
 
 @injectable()
 export class IngredientController implements IIngredientController {
-	constructor(@inject(TYPES_DI.IngredientService) private service: IIngredientService) {}
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	constructor(
+		@inject(TYPES_DI.IngredientService) private ingredientService: IIngredientService,
+		@inject(TYPES_DI.TranslationService) private translationService: ITranslationService
+	) {}
+
 	async search(params?: QueryIngredientSearch): Promise<APIGatewayProxyResult> {
 		try {
 			if (!params?.query) {
 				return missingParamError('query')
 			}
 
-			const { data } = await this.service.search(params)
+			const { data } = await this.ingredientService.search(params)
 
 			if (!data.results.length) {
 				return noContent()
 			}
 
-			return ok(data.results)
+			const { trans } = await this
+				.translationService
+				.translateJSON<IIngredientSearch[]>({
+					to: 'pt',
+					from: 'en',
+					json: data.results,
+					protected_paths: ['image']
+				})
+
+			if (!trans) {
+				return internalServerError()
+			}
+
+			return ok<IIngredientSearch[]>(trans)
 		} catch {
 			return internalServerError()
 		}
@@ -56,13 +76,26 @@ export class IngredientController implements IIngredientController {
 				return missingParamError('id')
 			}
 
-			const { data } = await this.service.getIngredientById(id, params)
+			const { data } = await this.ingredientService.getIngredientById(id, params)
 
 			if (!data) {
 				return badRequestError()
 			}
 
-			return ok<IIngredientInfo>(data)
+			const { trans } = await this
+				.translationService
+				.translateJSON<IIngredientInfo>({
+					to: 'pt',
+					from: 'en',
+					json: data,
+					protected_paths: ['image']
+				})
+
+			if (!trans) {
+				return internalServerError()
+			}
+
+			return ok<IIngredientInfo>(trans)
 		} catch {
 			return internalServerError()
 		}
@@ -86,7 +119,7 @@ export class IngredientController implements IIngredientController {
 				return missingParamError(missingParams.join(', '))
 			}
 
-			const { data } = await this.service.computeIngredientNutrientAmount(id, params)
+			const { data } = await this.ingredientService.computeIngredientNutrientAmount(id, params)
 
 			if (!data) {
 				return invalidParamError()
@@ -118,13 +151,26 @@ export class IngredientController implements IIngredientController {
 				return missingParamError(requiredParamsMissing.join(','))
 			}
 
-			const { data } = await this.service.convertAmounts(params)
+			const { data } = await this.ingredientService.convertAmounts(params)
 
 			if (!data) {
 				return badRequestError()
 			}
 
-			return ok<AmountConversion>(data)
+			const { trans } = await this
+				.translationService
+				.translateJSON<AmountConversion>({
+					to: 'pt',
+					from: 'en',
+					json: data,
+					protected_paths: []
+				})
+
+			if (!trans) {
+				return internalServerError()
+			}
+
+			return ok<AmountConversion>(trans)
 		} catch {
 			return internalServerError()
 		}
@@ -136,13 +182,26 @@ export class IngredientController implements IIngredientController {
 				return badRequestError()
 			}
 
-			const { data } = await this.service.autocompleteIngredientsSearch(params)
+			const { data } = await this.ingredientService.autocompleteIngredientsSearch(params)
 
 			if (!data) {
 				return noContent()
 			}
 
-			return ok<AutocompleteIngredientSearch[]>(data)
+			const { trans } = await this
+				.translationService
+				.translateJSON<AutocompleteIngredientSearch[]>({
+					to: 'pt',
+					from: 'en',
+					json: data,
+					protected_paths: []
+				})
+
+			if (!trans) {
+				return internalServerError()
+			}
+
+			return ok<AutocompleteIngredientSearch[]>(trans)
 		} catch {
 			return internalServerError()
 		}
@@ -154,13 +213,26 @@ export class IngredientController implements IIngredientController {
 				return badRequestError()
 			}
 
-			const { data } = await this.service.getIngredientSubstitutes(params)
+			const { data } = await this.ingredientService.getIngredientSubstitutes(params)
 
 			if (!data) {
 				return badRequestError()
 			}
 
-			return ok<IngredientSubstitutes>(data)
+			const { trans } = await this
+				.translationService
+				.translateJSON<IngredientSubstitutes>({
+					to: 'pt',
+					from: 'en',
+					json: data,
+					protected_paths: []
+				})
+
+			if (!trans) {
+				return internalServerError()
+			}
+
+			return ok<IngredientSubstitutes>(trans)
 		} catch {
 			return internalServerError()
 		}
