@@ -20,12 +20,12 @@ describe('Get By Id Controller', () => {
 
 	//<editor-fold desc="Should return 200 if a valid id was provided">
 	test('Should return 200 if a valid id was provided', async () => {
-		const { controller, service } = makeSut()
+		const { controller, recipeService } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse(mockedGetById))()
 
 		jest
-			.spyOn(service, 'getById')
+			.spyOn(recipeService, 'getById')
 			.mockReturnValueOnce(mock)
 
 		const response = await controller.getById(716429, false)
@@ -36,12 +36,12 @@ describe('Get By Id Controller', () => {
 
 	//<editor-fold desc="Should return 400 if no result is return">
 	test('Should return 400 if no result is return', async () => {
-		const { controller, service } = makeSut()
+		const { controller, recipeService } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse(null))()
 
 		jest
-			.spyOn(service, 'getById')
+			.spyOn(recipeService, 'getById')
 			.mockReturnValueOnce(mock)
 
 		const response = await controller.getById(123, false)

@@ -7,16 +7,17 @@ import {
 } from '../../../test-domains/recipes'
 import {AxiosResponse} from 'axios'
 import {buildAxiosResponse, promiseResolver} from '../../../index'
+import {mockGetRecipesTranslated} from '../../../test-domains/translation'
 
 describe('Get Controller', () => {
 	//<editor-fold desc="Should return 204 if no results were found">
 	test('Should return 204 if no results were found', async () => {
-		const { controller, service } = makeSut()
+		const { controller, recipeService } = makeSut()
 
 		const mock = promiseResolver<AxiosResponse>(buildAxiosResponse({results: []}))()
 
 		jest
-			.spyOn(service, 'get')
+			.spyOn(recipeService, 'get')
 			.mockReturnValueOnce(mock)
 		const response = await controller.get({})
 
@@ -27,13 +28,19 @@ describe('Get Controller', () => {
 
 	//<editor-fold desc="Should return 200 and 5 records as provided">
 	test('Should return 200 and 5 records as provided', async () => {
-		const { controller, service } = makeSut()
+		const { controller, recipeService, translationService } = makeSut()
 
 		const mock = promiseResolver<AxiosResponse>(buildAxiosResponse(mockedGetData))()
 
 		jest
-			.spyOn(service, 'get')
+			.spyOn(recipeService, 'get')
 			.mockReturnValueOnce(mock)
+
+		const mockTranslated = promiseResolver({ trans: mockGetRecipesTranslated })()
+
+		jest
+			.spyOn(translationService, 'translateJSON')
+			.mockReturnValueOnce(mockTranslated)
 
 		const response = await controller.get({ number: '5' })
 

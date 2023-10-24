@@ -1,9 +1,10 @@
 import 'reflect-metadata'
 import {describe, expect, jest, test} from '@jest/globals'
-import {makeSut, mockConvertAmount, mockConvertAmountTranslated} from '../../../test-domains/ingredients'
+import {makeSut, mockConvertAmount} from '../../../test-domains/ingredients'
 import {badRequestError, internalServerError, missingParamError} from '../../../../src/infra/error/http/error'
 import {buildAxiosResponse, promiseResolver} from '../../../index'
 import {ok} from '../../../../src/infra/http'
+import {mockConvertAmountTranslated} from '../../../test-domains/translation'
 
 describe('Convert Amounts Controller', () => {
 	//<editor-fold desc="Should return MissingParamError if no ingredientName was provided">

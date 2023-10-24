@@ -1,9 +1,10 @@
 import 'reflect-metadata'
 import {describe, expect, jest, test} from '@jest/globals'
-import {makeSut, mockGetIngredientById, mockGetIngredientByIdTranslated} from '../../../test-domains/ingredients'
+import {makeSut, mockGetIngredientById} from '../../../test-domains/ingredients'
 import {badRequestError, internalServerError, missingParamError} from '../../../../src/infra/error/http/error'
 import {buildAxiosResponse, promiseResolver} from '../../../index'
 import {ok} from '../../../../src/infra/http'
+import {mockGetIngredientByIdTranslated} from '../../../test-domains/translation'
 
 describe('Get Ingredient By IdController', () => {
 	//<editor-fold desc="Should return BadRequestError if no id was provided">

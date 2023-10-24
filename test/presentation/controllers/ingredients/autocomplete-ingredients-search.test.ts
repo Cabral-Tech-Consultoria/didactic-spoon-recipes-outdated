@@ -2,12 +2,12 @@ import 'reflect-metadata'
 import {describe, expect, jest, test} from '@jest/globals'
 import {
 	makeSut,
-	mockAutocompleteIngredientsSearch,
-	mockAutocompleteIngredientsSearchTranslated
+	mockAutocompleteIngredientsSearch
 } from '../../../test-domains/ingredients'
 import {badRequestError, internalServerError} from '../../../../src/infra/error/http/error'
 import {buildAxiosResponse, promiseResolver} from '../../../index'
 import {noContent, ok} from '../../../../src/infra/http'
+import {mockAutocompleteIngredientsSearchTranslated} from '../../../test-domains/translation'
 
 describe('Autocomplete Ingredients Search Controller', () => {
 	//<editor-fold desc="Should return BadRequestError if no query was provided">

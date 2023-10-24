@@ -5,22 +5,29 @@ import {ok} from '../../../../src/infra/http'
 import {randomRecipesMock} from '../../mock/random-recipes.mock'
 import {internalServerError} from '../../../../src/infra/error/http/error'
 import {buildAxiosResponse, promiseResolver} from '../../../index'
+import {mockGetRandomRecipes} from '../../../test-domains/translation'
 
 describe('Get Random Controller', () => {
 	//<editor-fold desc="Should return 200 and 3 results">
 	test('Should return 200 and 3 results', async () => {
-		const { controller, service } = makeSut()
+		const { controller, recipeService, translationService } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse(randomRecipesMock()))()
 
 		jest
-			.spyOn(service, 'getRandom')
+			.spyOn(recipeService, 'getRandom')
 			.mockReturnValueOnce(mock)
+
+		const mockTranslated = promiseResolver({ trans: mockGetRandomRecipes })()
+
+		jest
+			.spyOn(translationService, 'translateJSON')
+			.mockReturnValueOnce(mockTranslated)
 
 		const response = await controller.getRandom({ number: 3 })
 
-		expect(JSON.parse(response.body).recipes.length).toEqual(JSON.parse(ok(randomRecipesMock()).body).recipes.length)
-		expect(response.statusCode).toBe(ok({}).statusCode)
+		expect(JSON.parse(response.body).recipes.length).toEqual(JSON.parse(ok(mockGetRandomRecipes).body).recipes.length)
+		expect(response.statusCode).toBe(ok(mockGetRandomRecipes).statusCode)
 	})
 	//</editor-fold>
 

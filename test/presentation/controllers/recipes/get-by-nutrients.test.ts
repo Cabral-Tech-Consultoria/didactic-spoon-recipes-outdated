@@ -7,12 +7,12 @@ import {buildAxiosResponse, promiseResolver} from '../../../index'
 describe('Get By Nutrients Controller', () => {
 	//<editor-fold desc="Should return 204 if no data was found">
 	test('Should return 204 if no data was found', async () => {
-		const { controller, service } = makeSut()
+		const { controller, recipeService } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse([]))()
 
 		jest
-			.spyOn(service, 'getByNutrients')
+			.spyOn(recipeService, 'getByNutrients')
 			.mockReturnValueOnce(mock)
 
 		const response = await controller.getByNutrients({ minProtein: 25 })

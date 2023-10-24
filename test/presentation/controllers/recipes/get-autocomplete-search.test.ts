@@ -19,12 +19,12 @@ describe('Get Auto Complete Search Controller', () => {
 
 	//<editor-fold desc="Should return 204 if no data was found">
 	test('Should return 204 if no data was found', async () => {
-		const { controller, service } = makeSut()
+		const { controller, recipeService } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse([]))()
 
 		jest
-			.spyOn(service, 'getAutocompleteSearch')
+			.spyOn(recipeService, 'getAutocompleteSearch')
 			.mockReturnValueOnce(mock)
 
 		const response = await controller.getAutocompleteSearch({ query: 'rice', number: 10 })

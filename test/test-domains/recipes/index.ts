@@ -13,13 +13,16 @@ import {INutrition} from '../../../src/domain/protocols/interfaces/nutrition.int
 import {QuerySimilar} from '../../../src/infra/protocols/interfaces/query-similar.interface'
 import {RecipeController} from '../../../src/presentation/controllers/recipes/recipe.controller'
 import {buildAxiosResponse} from '../../index'
+import {buildTranslationService} from '../translation'
 
 export const makeSut = () => {
-	const service = buildRecipeService()
-	const controller = new RecipeController(service)
+	const recipeService = buildRecipeService()
+	const translationService = buildTranslationService()
+	const controller = new RecipeController(recipeService, translationService)
 
 	return {
-		service,
+		recipeService,
+		translationService,
 		controller
 	}
 }
@@ -52,7 +55,7 @@ export const buildRecipeService = () => {
 		}
 
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		getRandom(params?: QueryRandom): Promise<AxiosResponse<IRandomRecipes[]>> {
+		getRandom(params?: QueryRandom): Promise<AxiosResponse<IRandomRecipes>> {
 			return Promise.resolve(buildAxiosResponse(mockedGetRandom))
 		}
 

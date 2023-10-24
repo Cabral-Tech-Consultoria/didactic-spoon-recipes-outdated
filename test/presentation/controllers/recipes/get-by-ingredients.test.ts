@@ -35,12 +35,12 @@ describe('Get By Ingredients Controller', () => {
 
 	//<editor-fold desc="Should return 204 if no data was found">
 	test('Should return 204 if no data was found', async () => {
-		const { controller, service } = makeSut()
+		const { controller, recipeService } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse([]))()
 
 		jest
-			.spyOn(service, 'getByIngredients')
+			.spyOn(recipeService, 'getByIngredients')
 			.mockReturnValueOnce(mock)
 
 		const response = await controller.getByIngredients({ ingredients: 'ginger' })
