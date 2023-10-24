@@ -18,10 +18,14 @@ import {IRecipeController} from './protocols/i-recipe.controller'
 import {inject, injectable} from 'inversify'
 import {IRecipeService} from '../../../domain/services/protocols/i-recipe.service'
 import {TYPES_DI} from '../../../infra/dependency-injection/types.di'
+import {ITranslationService} from '../../../domain/services/protocols/i-translation.service'
 
 @injectable()
 export class RecipeController implements IRecipeController {
-	constructor(@inject(TYPES_DI.RecipeService) private service: IRecipeService) {}
+	constructor(
+		@inject(TYPES_DI.RecipeService) private recipeService: IRecipeService,
+		@inject(TYPES_DI.TranslationService) private translationService: ITranslationService
+	) {}
 
 	async get(params: BaseQueryStringSearch): Promise<APIGatewayProxyResult>  {
 		try {
@@ -29,7 +33,7 @@ export class RecipeController implements IRecipeController {
 
 			logger.info({ message: 'Converted querystring params', body: params })
 
-			const { data } = await this.service.get(params)
+			const { data } = await this.recipeService.get(params)
 
 			logger.info({ message: 'Items returned from recipe api', body: data.results })
 
@@ -38,8 +42,19 @@ export class RecipeController implements IRecipeController {
 				return noContent()
 			}
 
+			const { trans } = await this.translationService.translateJSON<IRecipe[]>({
+				to: 'pt',
+				from: 'en',
+				json: data.results,
+				protected_paths: []
+			})
+
+			if (!trans.length) {
+				return internalServerError()
+			}
+
 			logger.info({ message: 'Return the data received' })
-			return ok<IRecipe[]>(data.results)
+			return ok(trans)
 		} catch {
 			return internalServerError()
 		}
@@ -51,13 +66,24 @@ export class RecipeController implements IRecipeController {
 				return missingParamError('query')
 			}
 
-			const { data } = await this.service.getAutocompleteSearch(params)
+			const { data } = await this.recipeService.getAutocompleteSearch(params)
 
 			if (!data.length) {
 				return noContent()
 			}
 
-			return ok<IAutocompleteSearch[]>(data)
+			const { trans } = await this.translationService.translateJSON<IAutocompleteSearch[]>({
+				to: 'pt',
+				from: 'en',
+				json: data,
+				protected_paths: []
+			})
+
+			if (!trans.length) {
+				return internalServerError()
+			}
+
+			return ok(trans)
 		} catch {
 			return internalServerError()
 		}
@@ -69,13 +95,24 @@ export class RecipeController implements IRecipeController {
 				return missingParamError('id')
 			}
 
-			const { data } = await this.service.getById(id, includeNutrition)
+			const { data } = await this.recipeService.getById(id, includeNutrition)
 
 			if (!data) {
 				return badRequestError()
 			}
 
-			return ok<IRecipeInfo>(data)
+			const { trans } = await this.translationService.translateJSON<IRecipeInfo>({
+				to: 'pt',
+				from: 'en',
+				json: data,
+				protected_paths: ['image']
+			})
+
+			if (!trans) {
+				return internalServerError()
+			}
+
+			return ok(trans)
 		} catch {
 			return internalServerError()
 		}
@@ -87,13 +124,24 @@ export class RecipeController implements IRecipeController {
 				return missingParamError('ingredients')
 			}
 
-			const { data } = await this.service.getByIngredients(params)
+			const { data } = await this.recipeService.getByIngredients(params)
 
 			if (!data.length) {
 				return noContent()
 			}
 
-			return ok<IRecipeIngredientsInfo[]>(data)
+			const { trans } = await this.translationService.translateJSON<IRecipeIngredientsInfo[]>({
+				to: 'pt',
+				from: 'en',
+				json: data,
+				protected_paths: ['image']
+			})
+
+			if (!trans.length) {
+				return internalServerError()
+			}
+
+			return ok(trans)
 		} catch {
 			return internalServerError()
 		}
@@ -109,7 +157,7 @@ export class RecipeController implements IRecipeController {
 
 				logger.info({ message: 'Search for recipes based on these params', body: params })
 
-				const { data } = await this.service.getByNutrients(params)
+				const { data } = await this.recipeService.getByNutrients(params)
 
 				logger.info({ message: 'Recipes obtained from api', body: data })
 
@@ -118,7 +166,7 @@ export class RecipeController implements IRecipeController {
 
 			logger.info({ message: 'Search for recipes based on these params', body: nutrients })
 
-			const { data } = await this.service.getByNutrients({ ...nutrients })
+			const { data } = await this.recipeService.getByNutrients({ ...nutrients })
 
 			logger.info({ message: 'Recipes obtained from api', body: data })
 
@@ -128,9 +176,20 @@ export class RecipeController implements IRecipeController {
 				return noContent()
 			}
 
+			const { trans } = await this.translationService.translateJSON<IRecipe[]>({
+				to: 'pt',
+				from: 'en',
+				json: data,
+				protected_paths: []
+			})
+
+			if (!trans.length) {
+				return internalServerError()
+			}
+
 			logger.info({ message: 'Recipes obtained from api', body: data })
 
-			return ok(data)
+			return ok(trans)
 		} catch {
 			return internalServerError()
 		}
@@ -138,9 +197,24 @@ export class RecipeController implements IRecipeController {
 
 	async getRandom(params?: QueryRandom): Promise<APIGatewayProxyResult> {
 		try {
-			const { data } = await this.service.getRandom(params)
+			const { data } = await this.recipeService.getRandom(params)
 
-			return ok<IRandomRecipes[]>(data)
+			if (!data.recipes.length) {
+				return internalServerError()
+			}
+
+			const { trans } = await this.translationService.translateJSON<IRandomRecipes>({
+				to: 'pt',
+				from: 'en',
+				json: data,
+				protected_paths: []
+			})
+
+			if (!trans.recipes.length) {
+				return internalServerError()
+			}
+
+			return ok(trans)
 		} catch {
 			return internalServerError()
 		}
@@ -152,13 +226,24 @@ export class RecipeController implements IRecipeController {
 				return missingParamError('id')
 			}
 
-			const { data } = await this.service.getRecipeNutrition(id)
+			const { data } = await this.recipeService.getRecipeNutrition(id)
 
 			if (!data) {
 				return badRequestError()
 			}
 
-			return ok<INutrition>(data)
+			const { trans } = await this.translationService.translateJSON<INutrition>({
+				to: 'pt',
+				from: 'en',
+				json: data,
+				protected_paths: []
+			})
+
+			if (!trans) {
+				return internalServerError()
+			}
+
+			return ok<INutrition>(trans)
 		} catch {
 			return internalServerError()
 		}
@@ -169,13 +254,24 @@ export class RecipeController implements IRecipeController {
 			if (!id) {
 				return missingParamError('id')
 			}
-			const { data } = await this.service.getSimilarById(id, params)
+			const { data } = await this.recipeService.getSimilarById(id, params)
 
 			if (!data.length) {
 				return noContent()
 			}
 
-			return ok<ISimilarRecipe[]>(data)
+			const { trans } = await this.translationService.translateJSON<ISimilarRecipe[]>({
+				to: 'pt',
+				from: 'en',
+				json: data,
+				protected_paths: []
+			})
+
+			if (!trans.length) {
+				return internalServerError()
+			}
+
+			return ok(trans)
 		} catch {
 			return internalServerError()
 		}
