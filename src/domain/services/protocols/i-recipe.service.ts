@@ -17,7 +17,7 @@ export interface IRecipeService {
   getById(id?: number, includeNutrition?: boolean): Promise<AxiosResponse<IRecipeInfo>>
   getByIngredients(params: QueryIngredients): Promise<AxiosResponse<IRecipeIngredientsInfo[]>>
   getByNutrients(nutrients: INutrients): Promise<AxiosResponse<IRecipe[]>>
-  getRandom(params?: QueryRandom): Promise<AxiosResponse<IRandomRecipes[]>>
+  getRandom(params?: QueryRandom): Promise<AxiosResponse<IRandomRecipes>>
   getRecipeNutrition(id?: number): Promise<AxiosResponse<INutrition>>
   getSimilarById(id?: number, params?: QuerySimilar): Promise<AxiosResponse<ISimilarRecipe[]>>
 }

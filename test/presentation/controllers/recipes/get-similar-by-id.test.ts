@@ -19,12 +19,12 @@ describe('Get Similar By Id Comtroller', () => {
 
 	//<editor-fold desc="Should return 204 if no similar recipe was found">
 	test('Should return 204 if no similar recipe was found', async () => {
-		const { controller, service } = makeSut()
+		const { controller, recipeService } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse([]))()
 
 		jest
-			.spyOn(service, 'getSimilarById')
+			.spyOn(recipeService, 'getSimilarById')
 			.mockReturnValueOnce(mock)
 
 		const response = await controller.getSimilarById(754393)
