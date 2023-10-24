@@ -3,9 +3,17 @@ Transform: AWS::Serverless-2016-10-31
 Description: Sample SAM Template for lambda
 
 Parameters:
-  ApiKey:
+  FoodApiKey:
     Type: String
-    Description: Api key
+    Description: Food Api key
+    Default:
+  TranslationApiKey:
+    Type: String
+    Description: Translation Api key
+    Default:
+  TranslationApiAddress:
+    Type: String
+    Description: Translation Api Address
     Default:
 
 Resources:
@@ -14,7 +22,9 @@ Resources:
     Properties:
       Environment:
         Variables:
-          API_KEY: !Ref ApiKey
+          FOOD_API_KEY: !Ref FoodApiKey
+          TRANSLATION_API_KEY: !Ref TranslationApiKey
+          TRANSLATION_API_ADDRESS: !TranslationApiAddress
       CodeUri: .
       Handler: built/src/presentation/handlers/recipes/get.handle
       Runtime: nodejs18.x
@@ -31,7 +41,9 @@ Resources:
     Properties:
       Environment:
         Variables:
-          API_KEY: !Ref ApiKey
+          FOOD_API_KEY: !Ref FoodApiKey
+          TRANSLATION_API_KEY: !Ref TranslationApiKey
+          TRANSLATION_API_ADDRESS: !TranslationApiAddress
       CodeUri: .
       Handler: built/src/presentation/handlers/recipes/get-by-id.handle
       Runtime: nodejs18.x
@@ -48,7 +60,9 @@ Resources:
     Properties:
       Environment:
         Variables:
-          API_KEY: !Ref ApiKey
+          FOOD_API_KEY: !Ref FoodApiKey
+          TRANSLATION_API_KEY: !Ref TranslationApiKey
+          TRANSLATION_API_ADDRESS: !TranslationApiAddress
       CodeUri: .
       Handler: built/src/presentation/handlers/recipes/get-by-nutrients.handle
       Runtime: nodejs18.x
@@ -65,7 +79,9 @@ Resources:
     Properties:
       Environment:
         Variables:
-          API_KEY: !Ref ApiKey
+          FOOD_API_KEY: !Ref FoodApiKey
+          TRANSLATION_API_KEY: !Ref TranslationApiKey
+          TRANSLATION_API_ADDRESS: !TranslationApiAddress
       CodeUri: .
       Handler: built/src/presentation/handlers/recipes/get-by-ingredients.handle
       Runtime: nodejs18.x
@@ -96,7 +112,9 @@ Resources:
     Properties:
       Environment:
         Variables:
-          API_KEY: !Ref ApiKey
+          FOOD_API_KEY: !Ref FoodApiKey
+          TRANSLATION_API_KEY: !Ref TranslationApiKey
+          TRANSLATION_API_ADDRESS: !TranslationApiAddress
       CodeUri: .
       Handler: built/src/presentation/handlers/recipes/get-random.handle
       Runtime: nodejs18.x
@@ -113,7 +131,9 @@ Resources:
     Properties:
       Environment:
         Variables:
-          API_KEY: !Ref ApiKey
+          FOOD_API_KEY: !Ref FoodApiKey
+          TRANSLATION_API_KEY: !Ref TranslationApiKey
+          TRANSLATION_API_ADDRESS: !TranslationApiAddress
       CodeUri: .
       Handler: built/src/presentation/handlers/recipes/get-autocomplete-search.handle
       Runtime: nodejs18.x
@@ -130,7 +150,9 @@ Resources:
     Properties:
       Environment:
         Variables:
-          API_KEY: !Ref ApiKey
+          FOOD_API_KEY: !Ref FoodApiKey
+          TRANSLATION_API_KEY: !Ref TranslationApiKey
+          TRANSLATION_API_ADDRESS: !TranslationApiAddress
       CodeUri: .
       Handler: built/src/presentation/handlers/recipes/get-recipe-nutrition.handle
       Runtime: nodejs18.x
@@ -147,7 +169,9 @@ Resources:
     Properties:
       Environment:
         Variables:
-          API_KEY: !Ref ApiKey
+          FOOD_API_KEY: !Ref FoodApiKey
+          TRANSLATION_API_KEY: !Ref TranslationApiKey
+          TRANSLATION_API_ADDRESS: !TranslationApiAddress
       CodeUri: .
       Handler: built/src/presentation/handlers/ingredients/search.handle
       Runtime: nodejs18.x
@@ -164,7 +188,9 @@ Resources:
     Properties:
       Environment:
         Variables:
-          API_KEY: !Ref ApiKey
+          FOOD_API_KEY: !Ref FoodApiKey
+          TRANSLATION_API_KEY: !Ref TranslationApiKey
+          TRANSLATION_API_ADDRESS: !TranslationApiAddress
       CodeUri: .
       Handler: built/src/presentation/handlers/ingredients/get-ingredient-by-id.handle
       Runtime: nodejs18.x
@@ -181,7 +207,9 @@ Resources:
     Properties:
       Environment:
         Variables:
-          API_KEY: !Ref ApiKey
+          FOOD_API_KEY: !Ref FoodApiKey
+          TRANSLATION_API_KEY: !Ref TranslationApiKey
+          TRANSLATION_API_ADDRESS: !TranslationApiAddress
       CodeUri: .
       Handler: built/src/presentation/handlers/ingredients/compute-ingredient-nutrient-amount.handle
       Runtime: nodejs18.x
@@ -198,7 +226,9 @@ Resources:
     Properties:
       Environment:
         Variables:
-          API_KEY: !Ref ApiKey
+          FOOD_API_KEY: !Ref FoodApiKey
+          TRANSLATION_API_KEY: !Ref TranslationApiKey
+          TRANSLATION_API_ADDRESS: !TranslationApiAddress
       CodeUri: .
       Handler: built/src/presentation/handlers/ingredients/convert-amounts.handle
       Runtime: nodejs18.x
@@ -215,7 +245,9 @@ Resources:
     Properties:
       Environment:
         Variables:
-          API_KEY: !Ref ApiKey
+          FOOD_API_KEY: !Ref FoodApiKey
+          TRANSLATION_API_KEY: !Ref TranslationApiKey
+          TRANSLATION_API_ADDRESS: !TranslationApiAddress
       CodeUri: .
       Handler: built/src/presentation/handlers/ingredients/autocomplete-ingredients-search.handle
       Runtime: nodejs18.x
@@ -232,7 +264,9 @@ Resources:
     Properties:
       Environment:
         Variables:
-          API_KEY: !Ref ApiKey
+          FOOD_API_KEY: !Ref FoodApiKey
+          TRANSLATION_API_KEY: !Ref TranslationApiKey
+          TRANSLATION_API_ADDRESS: !TranslationApiAddress
       CodeUri: .
       Handler: built/src/presentation/handlers/ingredients/get-ingredient-substitutes.handle
       Runtime: nodejs18.x
