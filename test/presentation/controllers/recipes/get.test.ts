@@ -42,7 +42,7 @@ describe('Get Controller', () => {
 			.spyOn(translationService, 'translateJSON')
 			.mockReturnValueOnce(mockTranslated)
 
-		const response = await controller.get({ number: '5' })
+		const response = await controller.get({ number: 5 })
 
 		expect(JSON.parse(response.body).length).toBe(5)
 		expect(response.statusCode).toBe(200)
