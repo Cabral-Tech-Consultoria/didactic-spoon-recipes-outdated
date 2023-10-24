@@ -15,9 +15,11 @@ export const TranslationHttpFactory = (prefix: string): AxiosInstance => {
 	config()
 
 	return axios.create({
-		baseURL: `https://lecto-translation.p.rapidapi.com/v1/${prefix}`,
+		baseURL: `https://aibit-translator.p.rapidapi.com/api/v1/${prefix}`,
 		timeout: 6000,
 		headers: {
+			'content-type': 'application/x-www-form-urlencoded',
+			'accept-encoding': '',
 			'X-RapidAPI-Key': String(process.env.TRANSLATION_API_KEY),
 			'X-RapidAPI-Host': String(process.env.TRANSLATION_API_ADDRESS),
 		}
