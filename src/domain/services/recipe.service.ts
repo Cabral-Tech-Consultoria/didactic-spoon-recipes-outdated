@@ -54,10 +54,10 @@ export class RecipeService implements IRecipeService {
 			.get('/findByNutrients', {params: nutrients})
 	}
 
-	getRandom(params?: QueryRandom): Promise<AxiosResponse<IRandomRecipes[]>> {
+	getRandom(params?: QueryRandom): Promise<AxiosResponse<IRandomRecipes>> {
 		return this
 			.http
-			.get<IRandomRecipes[]>('/random', {
+			.get<IRandomRecipes>('/random', {
 				params
 			})
 	}
