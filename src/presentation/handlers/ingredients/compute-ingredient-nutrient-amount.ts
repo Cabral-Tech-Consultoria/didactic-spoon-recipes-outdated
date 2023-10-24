@@ -9,10 +9,13 @@ import {IIngredientService} from '../../../domain/services/protocols/i-ingredien
 import {
 	QueryComputeIngredientNutrientAmount
 } from '../../../infra/protocols/interfaces/query-compute-ingredient-nutrient-amount.interface'
+import {ITranslationService} from '../../../domain/services/protocols/i-translation.service'
+import {TranslationService} from '../../../domain/services/translation.service'
 
 export const handle: Handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 	DIContainerConfig.bindClass<IIngredientController>(TYPES_DI.IngredientController, IngredientController)
 	DIContainerConfig.bindClass<IIngredientService>(TYPES_DI.IngredientService, IngredientService)
+	DIContainerConfig.bindClass<ITranslationService>(TYPES_DI.TranslationService, TranslationService)
 
 	const controller = DIContainerConfig.container.resolve(IngredientController)
 
