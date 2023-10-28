@@ -18,4 +18,12 @@ export class TranslationService implements ITranslationService {
 
 		return data
 	}
+
+	async translateText(translation: TranslationTextDTO): Promise<Translation<string>> {
+		const { data } = await this
+			.http
+			.post<Translation<string>>('/text', translation)
+
+		return data
+	}
 }
