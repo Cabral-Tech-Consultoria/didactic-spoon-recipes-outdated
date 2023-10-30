@@ -51,9 +51,14 @@ describe('Autocomplete Ingredients Search Controller', () => {
 
 	//<editor-fold desc="Should return 204 if no data was returned">
 	test('Should return 204 if no data was returned', async () => {
-		const { controller, ingredientService } = makeSut()
+		const { controller, ingredientService, translationService } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse(null))()
+		const mockTranslation = promiseResolver({ trans: 'choco' })()
+
+		jest
+			.spyOn(translationService, 'translateText')
+			.mockReturnValueOnce(mockTranslation)
 
 		jest
 			.spyOn(ingredientService, 'autocompleteIngredientsSearch')
@@ -70,12 +75,17 @@ describe('Autocomplete Ingredients Search Controller', () => {
 		const { controller, ingredientService, translationService } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse(mockAutocompleteIngredientsSearch))()
+		const mockTranslated = promiseResolver({ trans: mockAutocompleteIngredientsSearchTranslated })()
+		const mockTranslation = promiseResolver({ trans: 'choco' })()
+
+		jest
+			.spyOn(translationService, 'translateText')
+			.mockReturnValueOnce(mockTranslation)
 
 		jest
 			.spyOn(ingredientService, 'autocompleteIngredientsSearch')
 			.mockReturnValueOnce(mock)
 
-		const mockTranslated = promiseResolver({ trans: mockAutocompleteIngredientsSearchTranslated })()
 
 		jest
 			.spyOn(translationService, 'translateJSON')

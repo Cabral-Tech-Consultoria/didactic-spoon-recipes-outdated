@@ -106,9 +106,14 @@ describe('Convert Amounts Controller', () => {
 
 	//<editor-fold desc="Should return BadRequestError if no data was returned">
 	test('Should return BadRequestError if no data was returned', async () => {
-		const { ingredientService, controller } = makeSut()
+		const { ingredientService, controller, translationService } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse(null))()
+		const mockTranslation = promiseResolver({ trans: 'chocolate' })()
+
+		jest
+			.spyOn(translationService, 'translateText')
+			.mockReturnValueOnce(mockTranslation)
 
 		jest
 			.spyOn(ingredientService, 'convertAmounts')
@@ -131,6 +136,11 @@ describe('Convert Amounts Controller', () => {
 		const { controller, ingredientService, translationService } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse(mockConvertAmount))()
+		const mockTranslation = promiseResolver({ trans: 'chocolate' })()
+
+		jest
+			.spyOn(translationService, 'translateText')
+			.mockReturnValueOnce(mockTranslation)
 
 		jest
 			.spyOn(ingredientService, 'convertAmounts')

@@ -19,6 +19,7 @@ import {inject, injectable} from 'inversify'
 import {IRecipeService} from '../../../domain/services/protocols/i-recipe.service'
 import {TYPES_DI} from '../../../infra/dependency-injection/types.di'
 import {ITranslationService} from '../../../domain/services/protocols/i-translation.service'
+import {TranslationFactory} from '../../../infra/factories/translation.factory'
 
 @injectable()
 export class RecipeController implements IRecipeController {
@@ -29,11 +30,26 @@ export class RecipeController implements IRecipeController {
 
 	async get(params: BaseQueryStringSearch): Promise<APIGatewayProxyResult>  {
 		try {
+			if (!params.query) {
+				return missingParamError('query')
+			}
+
+			logger.info({ message: 'Start the process to translate the query param' })
+
+			const textTranslated = await this
+				.translationService
+				.translateText(
+					TranslationFactory.make(params.query)
+				)
+			logger.info({ message: 'Param translated', body: textTranslated })
+
 			logger.info({ message: 'Params obtained from client', body: params })
 
 			logger.info({ message: 'Converted querystring params', body: params })
 
-			const { data } = await this.recipeService.get(params)
+			const { data } = await this
+				.recipeService
+				.get({ ...params, query: textTranslated.trans })
 
 			logger.info({ message: 'Items returned from recipe api', body: data.results })
 
@@ -66,18 +82,31 @@ export class RecipeController implements IRecipeController {
 				return missingParamError('query')
 			}
 
-			const { data } = await this.recipeService.getAutocompleteSearch(params)
+			const textTranslated = await this
+				.translationService
+				.translateText(
+					TranslationFactory.make(params.query)
+				)
+
+			const { data } = await this
+				.recipeService
+				.getAutocompleteSearch({
+					...params,
+					query: textTranslated.trans
+				})
 
 			if (!data.length) {
 				return noContent()
 			}
 
-			const { trans } = await this.translationService.translateJSON<IAutocompleteSearch[]>({
-				to: 'pt',
-				from: 'en',
-				json: data,
-				protected_paths: []
-			})
+			const { trans } = await this
+				.translationService
+				.translateJSON<IAutocompleteSearch[]>({
+					to: 'pt',
+					from: 'en',
+					json: data,
+					protected_paths: []
+				})
 
 			if (!trans.length) {
 				return internalServerError()
@@ -124,7 +153,18 @@ export class RecipeController implements IRecipeController {
 				return missingParamError('ingredients')
 			}
 
-			const { data } = await this.recipeService.getByIngredients(params)
+			const textTranslated = await this
+				.translationService
+				.translateText(
+					TranslationFactory.make(params.ingredients)
+				)
+
+			const { data } = await this
+				.recipeService
+				.getByIngredients({
+					...params,
+					ingredients: textTranslated.trans
+				})
 
 			if (!data.length) {
 				return noContent()

@@ -1,5 +1,5 @@
 import {ITranslationService} from '../../../src/domain/services/protocols/i-translation.service'
-import {TranslationDTO} from '../../../src/infra/protocols/dtos/translation.dto'
+import {TranslationDTO, TranslationTextDTO} from '../../../src/infra/protocols/dtos/translation.dto'
 import {Translation} from '../../../src/domain/protocols/interfaces/translation.interface'
 
 export const buildTranslationService = () => {
@@ -7,6 +7,16 @@ export const buildTranslationService = () => {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		translateJSON<T>(translation: TranslationDTO<T>): Promise<Translation<T>> {
 			return Promise.resolve({ trans: mockGetIngredientByIdTranslated } as Translation<T>)
+		}
+
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		translateText(translation: TranslationTextDTO<string>): Promise<Translation<string>> {
+			return Promise.resolve({ trans: 'frango' })
+		}
+
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		translateListTexts(translations: TranslationTextDTO<string[]>): Promise<Translation<string[]>> {
+			return Promise.resolve({ trans: ['frango', 'batata doce'] })
 		}
 
 	}
