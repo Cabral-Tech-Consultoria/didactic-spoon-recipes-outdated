@@ -38,7 +38,7 @@ export type LanguageSymbol =
   'fi' | 'fr' | 'fy' | 'gl' | 'ka' | 'de' | 'el' | 'gu' | 'ht' | 'ha' | 'he' |
   'hi' | 'hu' | 'is' | 'ig' | 'id' | 'ga' | 'it' | 'ja' | 'kn' | 'kk' | 'km' |
   'ko' | 'lo' | 'lv' | 'lt' | 'lb' | 'mk' | 'mg' | 'ms' | 'ml' | 'mr' | 'mn' |
-  'my' | 'ne' | 'nb' | 'no' | 'or' | 'ps' | 'fa' | 'pl' | 'pt' | 'ptBR' | 'ptPT' |
+  'my' | 'ne' | 'nb' | 'no' | 'or' | 'ps' | 'fa' | 'pl' | 'pt' | 'pt-BR' | 'pt-PT' |
   'pa' | 'ro' | 'ru' | 'gd' | 'sr' | 'sd' | 'si' | 'sk' | 'sl' | 'so' | 'es' |
   'su' | 'sw' | 'sv' | 'ta' | 'th' | 'tr' | 'uk' | 'ur' | 'uz' | 'vi' | 'cy' |
   'xh' | 'yi' | 'yo' | 'zu'
