@@ -7,11 +7,11 @@ export class TranslationDTO<T> {
 	) {}
 }
 
-export class TranslationTextDTO {
+export class TranslationTextDTO<T> {
 	constructor(
 		public to: string,
 		public from: string,
-		public text: string
+		public text: T
 	) {
 	}
 }

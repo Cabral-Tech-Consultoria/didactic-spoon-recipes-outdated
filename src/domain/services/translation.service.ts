@@ -21,11 +21,24 @@ export class TranslationService implements ITranslationService {
 		return data
 	}
 
-	async translateText(translation: TranslationTextDTO): Promise<Translation<string>> {
+	async translateText(translation: TranslationTextDTO<string>): Promise<Translation<string>> {
 		const { data } = await this
 			.http
 			.post<Translation<string>>('/text', translation)
 
 		return data
+	}
+	
+	async translateListTexts(translations: TranslationTextDTO<string[]>) {
+		const { data } = await this
+			.http
+			.post<Translation<string>>('/text', {
+				...translations,
+				text: translations.text.join('|')
+			})
+
+		return {
+			trans: data.trans.split('|')
+		}
 	}
 }
