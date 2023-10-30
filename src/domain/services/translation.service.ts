@@ -29,7 +29,7 @@ export class TranslationService implements ITranslationService {
 		return data
 	}
 	
-	async translateListTexts(translations: TranslationTextDTO<string[]>) {
+	async translateListTexts(translations: TranslationTextDTO<string[]>): Promise<Translation<string[]>> {
 		const { data } = await this
 			.http
 			.post<Translation<string>>('/text', {
