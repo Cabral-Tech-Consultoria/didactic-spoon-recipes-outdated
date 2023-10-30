@@ -31,6 +31,7 @@ import {ITranslationService} from '../../../domain/services/protocols/i-translat
 import {
 	IIngredientSearch,
 } from '../../../domain/protocols/interfaces/ingredient-search.interface'
+import {TranslationFactory} from '../../../infra/factories/translation.factory'
 
 @injectable()
 export class IngredientController implements IIngredientController {
@@ -45,7 +46,16 @@ export class IngredientController implements IIngredientController {
 				return missingParamError('query')
 			}
 
-			const { data } = await this.ingredientService.search(params)
+			const textTranslated = await this
+				.translationService
+				.translateText(TranslationFactory.make(params.query))
+
+			const { data } = await this
+				.ingredientService
+				.search({
+					...params,
+					query: textTranslated.trans
+				})
 
 			if (!data.results.length) {
 				return noContent()
@@ -139,19 +149,25 @@ export class IngredientController implements IIngredientController {
 
 			const requiredParamsMissing = validateRequiredParams<QueryConvertAmounts>(
 				params!,
-				[
-					'ingredientName',
-					'sourceAmount',
-					'sourceUnit',
-					'targetUnit',
-				]
+				[ 'ingredientName', 'sourceAmount', 'sourceUnit', 'targetUnit' ]
 			)
 
 			if (requiredParamsMissing.length) {
 				return missingParamError(requiredParamsMissing.join(','))
 			}
 
-			const { data } = await this.ingredientService.convertAmounts(params)
+			const textTranslated = await this
+				.translationService
+				.translateText(
+					TranslationFactory.make(params.ingredientName)
+				)
+
+			const { data } = await this
+				.ingredientService
+				.convertAmounts({
+					...params,
+					ingredientName: textTranslated.trans
+				})
 
 			if (!data) {
 				return badRequestError()
@@ -182,7 +198,18 @@ export class IngredientController implements IIngredientController {
 				return badRequestError()
 			}
 
-			const { data } = await this.ingredientService.autocompleteIngredientsSearch(params)
+			const textTranslated = await this
+				.translationService
+				.translateText(
+					TranslationFactory.make(params.query)
+				)
+
+			const { data } = await this
+				.ingredientService
+				.autocompleteIngredientsSearch({
+					...params,
+					query: textTranslated.trans
+				})
 
 			if (!data) {
 				return noContent()
@@ -213,7 +240,18 @@ export class IngredientController implements IIngredientController {
 				return badRequestError()
 			}
 
-			const { data } = await this.ingredientService.getIngredientSubstitutes(params)
+			const textTranslated = await this
+				.translationService
+				.translateText(
+					TranslationFactory.make(params.ingredientName)
+				)
+
+			const { data } = await this
+				.ingredientService
+				.getIngredientSubstitutes({
+					...params,
+					ingredientName: textTranslated.trans
+				})
 
 			if (!data) {
 				return badRequestError()
