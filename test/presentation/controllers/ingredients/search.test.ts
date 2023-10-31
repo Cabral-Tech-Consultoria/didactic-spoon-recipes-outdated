@@ -8,14 +8,16 @@ import {internalServerError, missingParamError} from '../../../../src/infra/erro
 describe('Search Ingredients', () => {
 	//<editor-fold desc="Should return 204 if no data was found">
 	test('Should return 204 if no data was found', async () => {
-		const { ingredientService, controller } = makeSut()
+		const { ingredientService, controller, translationService } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse({
-			results: [],
-			offset: 0,
-			number: 0,
-			totalResults: 0
+			results: [], offset: 0, number: 0, totalResults: 0
 		}))()
+		const mockTranslation = promiseResolver({ trans: 'maçã' })()
+
+		jest
+			.spyOn(translationService, 'translateText')
+			.mockReturnValueOnce(mockTranslation)
 
 		jest
 			.spyOn(ingredientService, 'search')

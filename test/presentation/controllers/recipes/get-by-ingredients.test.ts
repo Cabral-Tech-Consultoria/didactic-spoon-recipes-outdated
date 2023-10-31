@@ -18,9 +18,14 @@ describe('Get By Ingredients Controller', () => {
 
 	//<editor-fold desc="Should return InternalServerError if throws">
 	test('Should return InternalServerError if throws', async () => {
-		const { controller } = makeSut()
+		const { controller, translationService } = makeSut()
 
 		const mock = promiseResolver(internalServerError())()
+		const mockTranslation = promiseResolver({ trans: 'frango' })()
+
+		jest
+			.spyOn(translationService, 'translateText')
+			.mockReturnValueOnce(mockTranslation)
 
 		jest
 			.spyOn(controller, 'getByIngredients')
@@ -35,9 +40,14 @@ describe('Get By Ingredients Controller', () => {
 
 	//<editor-fold desc="Should return 204 if no data was found">
 	test('Should return 204 if no data was found', async () => {
-		const { controller, recipeService } = makeSut()
+		const { controller, recipeService,translationService } = makeSut()
 
 		const mock = promiseResolver(buildAxiosResponse([]))()
+		const mockTranslation = promiseResolver({ trans: 'frango' })()
+
+		jest
+			.spyOn(translationService, 'translateText')
+			.mockReturnValueOnce(mockTranslation)
 
 		jest
 			.spyOn(recipeService, 'getByIngredients')
