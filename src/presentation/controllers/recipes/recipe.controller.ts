@@ -15,7 +15,6 @@ import {IRecipeIngredientsInfo} from '../../../domain/protocols/interfaces/ingre
 import {IAutocompleteSearch} from '../../../domain/protocols/interfaces/autocomplete-search.interface'
 import {INutrients} from '../../../domain/protocols/interfaces/nutrients.interface'
 import {IsObjectEmpty} from '../../../utils/objects/check-null-properties'
-import {INutrition} from '../../../domain/protocols/interfaces/nutrition.interface'
 import {IRecipeController} from './protocols/i-recipe.controller'
 import {inject, injectable} from 'inversify'
 import {IRecipeService} from '../../../domain/services/protocols/i-recipe.service'
@@ -364,23 +363,57 @@ export class RecipeController implements IRecipeController {
 				return badRequestError()
 			}
 
-			logger.info({message: 'Start the process to translate the data received'})
-			const {trans} = await this.translationService.translateJSON<INutrition>({
+			const {
+				good,
+				bad,
+				properties,
+				caloricBreakdown,
+				calories,
+				carbs,
+				fat,
+				protein,
+				ingredients
+			} = data
+
+			const filteredIngredients = ingredients.map((i) => {
+				return {
+					...i,
+					nutrients: i.nutrients.filter((n) => n.amount > 0)
+				}
+			})
+
+			logger.info({message: '[FIRST]: Start the process to translate the data received'})
+			const firstTranslation = await this.translationService.translateJSON({
 				to: 'pt',
 				from: 'en',
-				json: data,
+				json: {
+					good, bad, properties,
+					caloricBreakdown, calories,
+					carbs, fat, protein,
+					ingredients: filteredIngredients
+				},
 				protected_paths: []
 			})
-			logger.info({message: 'Data translated', payload: trans})
+
+			logger.info({message: '[SECOND]: Start the process to translate the data received'})
+			const secondTranslation = await this.translationService.translateJSON({
+				to: 'pt',
+				from: 'en',
+				json: {ingredients: filteredIngredients},
+				protected_paths: []
+			})
+
+
+			logger.info({message: 'Data translated', payload: {...firstTranslation.trans, ...secondTranslation.trans}})
 
 			logger.info({message: 'Verify if translated data is empty'})
-			if (!trans) {
+			if (!firstTranslation.trans && !secondTranslation.trans) {
 				logger.error({message: 'Return internal server error'})
 				return internalServerError()
 			}
 
 			logger.info({message: 'Return data translated'})
-			return ok<INutrition>(trans)
+			return ok({...firstTranslation.trans, ...secondTranslation.trans})
 		} catch (err) {
 			logger.error({message: '[ERROR]: Display the error', error: err})
 			return internalServerError()
