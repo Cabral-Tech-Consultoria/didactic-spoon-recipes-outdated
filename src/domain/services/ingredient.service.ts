@@ -8,10 +8,10 @@ import {NutrientAmount} from '../protocols/interfaces/nutrient-amount.interface'
 import {AmountConversion} from '../protocols/interfaces/amount-conversion.interface'
 import {
 	QueryAutocompleteIngredientSearch,
-	QueryIngredientSearch,
-	QueryIngredientById,
 	QueryComputeIngredientNutrientAmount,
-	QueryConvertAmounts
+	QueryConvertAmounts,
+	QueryIngredientById,
+	QueryIngredientSearch
 } from '../../infra/protocols/interfaces'
 import {AutocompleteIngredientSearch} from '../protocols/interfaces/autocomplete-ingredient-search.interface'
 import {QueryIngredientSubstitutes} from '../../infra/protocols/interfaces/query-ingredient-substitutes.interface'
@@ -21,32 +21,33 @@ import {IngredientSubstitutes} from '../protocols/interfaces/ingredient-substitu
 export class IngredientService implements IIngredientService {
 	private http: AxiosInstance
 	private httpRecipe: AxiosInstance
+
 	constructor() {
-		this.http = FoodHttpFactory('/food/ingredients')
-		this.httpRecipe = FoodHttpFactory('/recipes')
+		this.http = FoodHttpFactory('food/ingredients')
+		this.httpRecipe = FoodHttpFactory('recipes')
 	}
 
 	async search(params?: QueryIngredientSearch): Promise<AxiosResponse<IIngredientSearchList>> {
-		return this.http.get<IIngredientSearchList>('/search', { params })
+		return this.http.get<IIngredientSearchList>('/search', {params})
 	}
 
 	async getIngredientById(id?: number, params?: QueryIngredientById): Promise<AxiosResponse<IIngredientInfo>> {
-		return this.http.get<IIngredientInfo>(`/${id}/information`, { params })
+		return this.http.get<IIngredientInfo>(`/${id}/information`, {params})
 	}
 
 	async computeIngredientNutrientAmount(id?: number, params?: QueryComputeIngredientNutrientAmount): Promise<AxiosResponse<NutrientAmount>> {
-		return this.http.get<NutrientAmount>(`/${id}/amount`, { params })
+		return this.http.get<NutrientAmount>(`/${id}/amount`, {params})
 	}
 
 	async convertAmounts(params?: QueryConvertAmounts): Promise<AxiosResponse<AmountConversion>> {
-		return this.httpRecipe.get<AmountConversion>('/convert', { params })
+		return this.httpRecipe.get<AmountConversion>('/convert', {params})
 	}
 
 	async autocompleteIngredientsSearch(params?: QueryAutocompleteIngredientSearch): Promise<AxiosResponse<AutocompleteIngredientSearch[]>> {
-		return this.http.get('/autocomplete', { params })
+		return this.http.get('/autocomplete', {params})
 	}
 
 	async getIngredientSubstitutes(params?: QueryIngredientSubstitutes): Promise<AxiosResponse<IngredientSubstitutes>> {
-		return this.http.get<IngredientSubstitutes>('/substitutes', { params })
+		return this.http.get<IngredientSubstitutes>('/substitutes', {params})
 	}
 }
