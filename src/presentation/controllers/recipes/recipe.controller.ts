@@ -389,8 +389,7 @@ export class RecipeController implements IRecipeController {
 				json: {
 					good, bad, properties,
 					caloricBreakdown, calories,
-					carbs, fat, protein,
-					ingredients: filteredIngredients
+					carbs, fat, protein
 				},
 				protected_paths: []
 			})
