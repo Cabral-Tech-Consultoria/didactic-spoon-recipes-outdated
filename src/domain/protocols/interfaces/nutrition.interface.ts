@@ -1,8 +1,13 @@
 export interface INutrition {
+  calories: string,
+  carbs: string,
+  fat: string,
+  protein: string,
   bad: IEvalNutrient[]
   good: IEvalNutrient[]
   nutrients: INutrient[],
   properties: IProperty[],
+  flavonoids: IProperty[],
   ingredients: INutrientByIngredient[],
   caloricBreakdown: ICaloricBreakDown,
   weightPerServing: {
