@@ -12,7 +12,7 @@ import {inject, injectable} from 'inversify'
 import {TYPES_DI} from '../../../infra/dependency-injection/types.di'
 import {IIngredientInfo} from '../../../domain/protocols/interfaces/ingredient.interface'
 
-import {validateRequiredParams} from '../../../main/validations/ingredients'
+import {validateRequiredParams} from '../../../main/validations/validate-required-params'
 import {NutrientAmount} from '../../../domain/protocols/interfaces/nutrient-amount.interface'
 import {AmountConversion} from '../../../domain/protocols/interfaces/amount-conversion.interface'
 import {

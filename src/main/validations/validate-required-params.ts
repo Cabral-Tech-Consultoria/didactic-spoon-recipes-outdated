@@ -1,4 +1,4 @@
-import {getProperty} from '../../../utils/objects/check-null-properties'
+import {getProperty} from '../../utils/objects/check-null-properties'
 
 export const validateRequiredParams = <T extends object>(params: T, requiredParams: string[]): string[] => {
 	const propertiesMissing: string[] = []
