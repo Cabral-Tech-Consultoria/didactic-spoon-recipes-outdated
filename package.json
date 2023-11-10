@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --passWithNoTests",
-    "test:watch": "jest --passWithNoTests --watch",
+    "test:watch": "jest --passWithNoTests --onlyChanged --watch",
     "test:coverage": "jest --passWithNoTests --coverage",
     "prepare": "husky install"
   },
