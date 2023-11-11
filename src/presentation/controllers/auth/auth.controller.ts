@@ -2,7 +2,7 @@ import {IAuthController} from './protocols/i-auth.controller'
 import {UserDTO} from '../../../infra/protocols/dtos/user.dto'
 import {APIGatewayProxyResult} from 'aws-lambda'
 import {validateRequiredParams} from '../../../main/validations/validate-required-params'
-import {badRequestError, unprocessableEntityError} from '../../../infra/error/http/error'
+import {badRequestError, internalServerError, unprocessableEntityError} from '../../../infra/error/http/error'
 import {noContent} from '../../../infra/http'
 import {inject, injectable} from 'inversify'
 import {TYPES_DI} from '../../../infra/dependency-injection/types.di'
@@ -40,13 +40,7 @@ export class AuthController implements IAuthController {
 
 			return noContent()
 		} catch (err) {
-			console.log('\n\n\n')
-			console.log(err)
-			return {
-				statusCode: 200,
-				body: JSON.stringify(err)
-			}
-			// return internalServerError()
+			return internalServerError()
 		}
 	}
 }
