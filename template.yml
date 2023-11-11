@@ -336,3 +336,26 @@ Resources:
           Properties:
             Path: /ingredients/substitutes
             Method: get
+
+  UserRegistration:
+    Type: AWS::Serverless::Function
+    Properties:
+      MemorySize: 512
+      Environment:
+        Variables:
+          API_KEY: !Ref ApiKey
+          FOOD_API_ADDRESS: !Ref FoodApiAddress
+          TRANSLATION_API_ADDRESS: !Ref TranslationApiAddress
+          AWS_USER_POOL_ID: !Ref AWSUserPoolId
+          AWS_CLIENT_ID: !Ref AWSClientId
+          AWS_POLL_REGION: !Ref AWSPoolRegion
+      CodeUri: .
+      Handler: built/src/presentation/handlers/auth/register.handle
+      Runtime: nodejs18.x
+      Timeout: 60
+      Events:
+        CreateBooks:
+          Type: Api
+          Properties:
+            Path: /register
+            Method: post

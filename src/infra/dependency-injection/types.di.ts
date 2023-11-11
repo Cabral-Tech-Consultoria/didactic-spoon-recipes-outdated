@@ -8,6 +8,8 @@ export const TYPES_DI = {
 	IngredientService: Symbol.for('IngredientService'),
 	IngredientController: Symbol.for('IngredientController'),
 	TranslationService: Symbol.for('TranslationService'),
+	AuthController: Symbol.for('AuthController'),
+	AuthService: Symbol.for('AuthService'),
 }
 
 export class DIContainerConfig {
